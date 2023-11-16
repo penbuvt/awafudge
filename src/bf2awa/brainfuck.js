@@ -594,28 +594,30 @@ options: {},
 performAction: function anonymous(yy,yy_,$avoiding_name_collisions,YY_START) {
 var YYSTATE=YY_START;
 switch($avoiding_name_collisions) {
-case 0:return 23;
+case 0:/* ignore all other characters */
 break;
-case 1:return 21;
+case 1:return 23;
 break;
-case 2:return 17;
+case 2:return 21;
 break;
-case 3:return 19;
+case 3:return 17;
 break;
-case 4:return 14;
+case 4:return 19;
 break;
-case 5:return 15;
+case 5:return 14;
 break;
-case 6:return 27;
+case 6:return 15;
 break;
-case 7:return 25;
+case 7:return 27;
 break;
-case 8:return 5;
+case 8:return 25;
+break;
+case 9:return 5;
 break;
 }
 },
-rules: [/^(?:-)/,/^(?:\+)/,/^(?:<)/,/^(?:>)/,/^(?:\[)/,/^(?:\])/,/^(?:\.)/,/^(?:,)/,/^(?:$)/],
-conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8],"inclusive":true}}
+rules: [/^(?:[^-+<>\[\],.]+)/,/^(?:-)/,/^(?:\+)/,/^(?:<)/,/^(?:>)/,/^(?:\[)/,/^(?:\])/,/^(?:\.)/,/^(?:,)/,/^(?:$)/],
+conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9],"inclusive":true}}
 });
 return lexer;
 })();

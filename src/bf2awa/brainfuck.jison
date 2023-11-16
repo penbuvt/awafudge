@@ -1,6 +1,9 @@
 %lex
 
 %%
+
+[^-+<>\[\],.]+ /* ignore all other characters */
+
 "-" return '-';
 "+" return '+';
 "<" return '<';
