@@ -13,33 +13,35 @@
 
 /lex
 
+%ebnf
+
 %%
 
-program: operations EOF {return $1;};
+program: operations EOF {return $1.join('');};
 
 operations: /* empty */ {$$ = [];}
-          | operations operation {$$ = (($1).push($2), $1);}
+          | operations operation {$$ = ($1.push($2), $1);}
           ;
 
-operation: LEFTSHIFT
-         | RIGHTSHIFT
-         | INCREMENT
-         | DECREMENT
-         | INPUT
-         | OUTPUT
+operation: LEFTSHIFT+ {$$ = $1.join('') + '~';}
+         | RIGHTSHIFT+ {$$ = 'a' + $1.join('') + '~';}
+         | INCREMENT+ {$$ = 'a' + $1.join('');}
+         | DECREMENT+ {$$ = $1.join('');}
+         | INPUT+ {$$ = $1.join('');}
+         | OUTPUT+ {$$ = $1.join('');}
          | loop
          ;
 
-loop: '[' operations ']' {$$ = $2;};
+loop: '[' operations ']' {$$ = '?' + $2.join('') + '!';};
 
-LEFTSHIFT: '<' {$$ = '<';};
+LEFTSHIFT: '<' {$$ = 'wa';};
 
-RIGHTSHIFT: '>' {$$ = '>';};
+RIGHTSHIFT: '>' {$$ = 'wa';};
 
-INCREMENT: '+' {$$ = '+';};
+INCREMENT: '+' {$$ = 'wa';};
 
-DECREMENT: '-' {$$ = '-';};
+DECREMENT: '-' {$$ = 'wa';};
 
-INPUT: ',' {$$ = ',';};
+INPUT: ',';
 
-OUTPUT: '.' {$$ = '.';};
+OUTPUT: '.';
