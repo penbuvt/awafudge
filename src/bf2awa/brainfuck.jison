@@ -20,16 +20,16 @@
 
 %%
 
-program: operations EOF {return $1.join('');};
+program: operations EOF {return $1.join('').trim();};
 
 operations: /* empty */ {$$ = [];}
           | operations operation {$$ = ($1.push($2), $1);}
           ;
 
-operation: LEFTSHIFT+ {$$ = $1.join('') + '~';}
-         | RIGHTSHIFT+ {$$ = 'a' + $1.join('') + '~';}
-         | INCREMENT+ {$$ = 'a' + $1.join('');}
-         | DECREMENT+ {$$ = $1.join('');}
+operation: LEFTSHIFT+ {$$ = ' ' + $1.join('') + '~';}
+         | RIGHTSHIFT+ {$$ = ' a' + $1.join('') + '~';}
+         | INCREMENT+ {$$ = ' a' + $1.join('');}
+         | DECREMENT+ {$$ = ' ' + $1.join('');}
          | INPUT+ {$$ = $1.join('');}
          | OUTPUT+ {$$ = $1.join('');}
          | loop

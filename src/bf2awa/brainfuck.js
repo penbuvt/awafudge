@@ -84,7 +84,7 @@ performAction: function anonymous(yytext, yyleng, yylineno, yy, yystate /* actio
 var $0 = $$.length - 1;
 switch (yystate) {
 case 1:
-return $$[$0-1].join('');
+return $$[$0-1].join('').trim();
 break;
 case 2:
 this.$ = [];
@@ -93,15 +93,18 @@ case 3:
 this.$ = ($$[$0-1].push($$[$0]), $$[$0-1]);
 break;
 case 4:
-this.$ = $$[$0].join('') + '~';
+this.$ = ' ' + $$[$0].join('') + '~';
 break;
 case 5:
-this.$ = 'a' + $$[$0].join('') + '~';
+this.$ = ' a' + $$[$0].join('') + '~';
 break;
 case 6:
-this.$ = 'a' + $$[$0].join('');
+this.$ = ' a' + $$[$0].join('');
 break;
-case 7: case 8: case 9:
+case 7:
+this.$ = ' ' + $$[$0].join('');
+break;
+case 8: case 9:
 this.$ = $$[$0].join('');
 break;
 case 11:
