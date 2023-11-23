@@ -4,10 +4,10 @@
 
 [^-+<>\[\],.]+ /* ignore all other characters */
 
-"-" return '-';
-"+" return '+';
-"<" return '<';
-">" return '>';
+\-+ return 'DECREMENTS';
+\++ return 'INCREMENTS';
+\<+ return 'LEFTSHIFTS';
+\>+ return 'RIGHTSHIFTS';
 "[" return '[';
 "]" return ']';
 "." return '.';
@@ -26,12 +26,12 @@ operations: /* empty */ {$$ = [];}
           | operations operation {$$ = ($1.push($2), $1);}
           ;
 
-operation: LEFTSHIFT+ {$$ = ' ' + $1.join('') + '~';}
-         | RIGHTSHIFT+ {$$ = ' a' + $1.join('') + '~';}
-         | INCREMENT+ {$$ = ' a' + $1.join('');}
-         | DECREMENT+ {$$ = ' ' + $1.join('');}
-         | INPUT+ {$$ = $1.join('');}
-         | OUTPUT+ {$$ = $1.join('');}
+operation: LEFTSHIFTS {$$ = ' ' + 'wa'.repeat(yyleng) + '~';}
+         | RIGHTSHIFTS {$$ = ' a' + 'wa'.repeat(yyleng) + '~';}
+         | INCREMENTS {$$ = ' a' + 'wa'.repeat(yyleng);}
+         | DECREMENTS {$$ = ' ' + 'wa'.repeat(yyleng);}
+         | INPUT {$$ = $1;}
+         | OUTPUT {$$ = $1;}
          | loop
          ;
 
