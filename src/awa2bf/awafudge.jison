@@ -6,6 +6,8 @@
 ("wa") return 'WA';
 "," return ',';
 "." return '.';
+"?" return '?';
+"!" return '!';
 "~" return '~';
 
 (\s|[^aw~.,?!])+ return 'SPACE';
@@ -31,7 +33,10 @@ operation: decrements {$$ = $1;}
          | rightshifts {$$ = $1;}
          | ',' {$$ = $1;}
          | '.' {$$ = $1;}
+         | loop
          ;
+
+loop: '?' operations '!' {$$ = '[' + $2.join('') + ']';};
 
 decrements: was {$$ = '-'.repeat($1.length);};
 
