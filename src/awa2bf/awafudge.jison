@@ -4,6 +4,7 @@
 
 ("a") return 'A';
 ("wa") return 'WA';
+"~" return '~';
 
 (\s|[^aw~.,?!])+ return 'SPACE';
 
@@ -24,8 +25,18 @@ operations: /* empty */ {$$ = [];}
 
 operation: decrements {$$ = $1;}
          | increments {$$ = $1;}
+         | leftshifts {$$ = $1;}
+         | rightshifts {$$ = $1;}
          ;
 
-decrements: WA+ {$$ = '-'.repeat($1.length);};
+decrements: was {$$ = '-'.repeat($1.length);};
 
-increments: A WA+ {$$ = '+'.repeat($2.length);};
+increments: awas {$$ = '+'.repeat($1.length);};
+
+leftshifts: was '~' {$$ = '<'.repeat($1.length);};
+
+rightshifts: awas '~' {$$ = '>'.repeat($1.length);};
+
+was: WA+ {$$ = $1;};
+
+awas: A was {$$ = $2;};
