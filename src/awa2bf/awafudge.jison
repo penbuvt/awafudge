@@ -48,4 +48,5 @@ rightshifts: awas '~' {$$ = '>'.repeat($1.length);};
 
 was: WA+ {$$ = $1;};
 
-awas: A was {$$ = $2;};
+awas: A {$$ = '';}
+    | A was {$$ = $2;};
