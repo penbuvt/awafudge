@@ -20,9 +20,27 @@ describe('brainfuck parser', () => {
     assert.strictEqual(actual, expected);
   });
 
+  it('parses multiple right shift instructions', () => {
+    const input = '>>>';
+    const expected = 'awawawa~';
+
+    const actual = parse(input);
+
+    assert.strictEqual(actual, expected);
+  });
+
   it('parses a single left shift instruction', () => {
     const input = '<';
     const expected = 'wa~';
+
+    const actual = parse(input);
+
+    assert.strictEqual(actual, expected);
+  });
+
+  it('parses multiple left shift instructions', () => {
+    const input = '<<<';
+    const expected = 'wawawa~';
 
     const actual = parse(input);
 
@@ -38,9 +56,27 @@ describe('brainfuck parser', () => {
     assert.strictEqual(actual, expected);
   });
 
+  it('parses multiple increment instructions', () => {
+    const input = '+++';
+    const expected = 'awawawa';
+
+    const actual = parse(input);
+
+    assert.strictEqual(actual, expected);
+  });
+
   it('parses a single decrement instruction', () => {
     const input = '-';
     const expected = 'wa';
+
+    const actual = parse(input);
+
+    assert.strictEqual(actual, expected);
+  });
+
+  it('parses multiple decrement instructions', () => {
+    const input = '---';
+    const expected = 'wawawa';
 
     const actual = parse(input);
 
@@ -56,9 +92,27 @@ describe('brainfuck parser', () => {
     assert.strictEqual(actual, expected);
   });
 
+  it('parses multiple write instructions', () => {
+    const input = '...';
+    const expected = '...';
+
+    const actual = parse(input);
+
+    assert.strictEqual(actual, expected);
+  });
+
   it('parses a single read instruction', () => {
     const input = ',';
     const expected = ',';
+
+    const actual = parse(input);
+
+    assert.strictEqual(actual, expected);
+  });
+
+  it('parses multiple read instructions', () => {
+    const input = ',,,';
+    const expected = ',,,';
 
     const actual = parse(input);
 
