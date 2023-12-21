@@ -12,6 +12,8 @@ function format(tokens) {
         [TokenType.LeftShift]: '<',
         [TokenType.Increment]: '+',
       }[tokens[0].type].repeat(tokens[0].count);
+    case TokenType.Write:
+      return '.';
     case TokenType.Loop:
       return '[]';
   }
