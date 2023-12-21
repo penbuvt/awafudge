@@ -135,4 +135,20 @@ describe('brainfuck formatter', () => {
 
     assert.strictEqual(actual, expected);
   });
+
+  it('formats nested loops with content', () => {
+    const input = [{ type: TokenType.Loop, content: [
+      { type: TokenType.RightShift, count: 1 },
+      { type: TokenType.Loop, content: [
+        { type: TokenType.RightShift, count: 1 },
+        { type: TokenType.Increment, count: 1 },
+      ] },
+      { type: TokenType.Increment, count: 1 },
+    ] }];
+    const expected = '[>[>+]+]';
+
+    const actual = format(input);
+
+    assert.strictEqual(actual, expected);
+  });
 });
