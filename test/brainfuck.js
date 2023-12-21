@@ -162,6 +162,15 @@ describe('brainfuck parser', () => {
     assert.throws(actual, Error);
   });
 
+  it('parses adjacent word instructions of the same type as separate tokens', () => {
+    const input = '++ ++';
+    const expected = 'awawa awawa';
+
+    const actual = parse(input);
+
+    assert.strictEqual(actual, expected);
+  });
+
   describe('potential ambiguous cases', () => {
     // These cases require separating the tokens with a space on output
     // to avoid ambiguous tokens.
