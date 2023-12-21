@@ -137,6 +137,38 @@ describe('brainfuck parser', () => {
     assert.strictEqual(actual, expected);
   });
 
+  describe('potential ambiguous cases', () => {
+    // These cases require separating the tokens with a space on output
+    // to avoid ambiguous tokens.
+
+    it('parses +-', () => {
+      const input = '+-';
+      const expected = 'awa wa';
+
+      const actual = parse(input);
+
+      assert.strictEqual(actual, expected);
+    });
+
+    it('parses +<', () => {
+      const input = '+<';
+      const expected = 'awa wa~';
+
+      const actual = parse(input);
+
+      assert.strictEqual(actual, expected);
+    });
+
+    it('parses -<', () => {
+      const input = '-<';
+      const expected = 'wa wa~';
+
+      const actual = parse(input);
+
+      assert.strictEqual(actual, expected);
+    });
+  })
+
   it('ignores non-instruction characters', () => {
     const input = '`1234567890=qwertyuiop\\asdfghjkl;\'zxcvbnm/ \n~!@#$%^&*()_QWERTYUIOP{}|ASDFGHJKL:"ZXCVBNM?';
     const expected = '';
