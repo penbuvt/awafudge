@@ -10,4 +10,13 @@ describe('brainfuck parser', () => {
 
     assert.strictEqual(actual, expected);
   });
+
+  it('parses a single increment instruction', () => {
+    const input = '+';
+    const expected = 'awa';
+
+    const actual = parse(input);
+
+    assert.strictEqual(actual, expected);
+  });
 });
