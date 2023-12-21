@@ -11,6 +11,15 @@ describe('awafudge parser', () => {
     assert.strictEqual(actual, expected);
   });
 
+  it('parses an empty right shift instruction', () => {
+    const input = 'a~';
+    const expected = '';
+
+    const actual = parse(input);
+
+    assert.strictEqual(actual, expected);
+  });
+
   it('parses a single right shift instruction', () => {
     const input = 'awa~';
     const expected = '>';
@@ -41,6 +50,15 @@ describe('awafudge parser', () => {
   it('parses multiple left shift instructions', () => {
     const input = 'wawawa~';
     const expected = '<<<';
+
+    const actual = parse(input);
+
+    assert.strictEqual(actual, expected);
+  });
+
+  it('parses an empty increment instruction', () => {
+    const input = 'a';
+    const expected = '';
 
     const actual = parse(input);
 
