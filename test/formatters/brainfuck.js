@@ -28,4 +28,13 @@ describe('brainfuck formatter', () => {
 
     assert.strictEqual(actual, expected);
   });
+
+  it('formats multiple right shift instructions', () => {
+    const input = [{ type: 'RIGHT_SHIFT', count: 3 }];
+    const expected = '>>>';
+
+    const actual = format(input);
+
+    assert.strictEqual(actual, expected);
+  });
 });
