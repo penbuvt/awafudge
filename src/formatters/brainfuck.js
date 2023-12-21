@@ -1,5 +1,5 @@
 function format(tokens) {
-  return '';
+  return tokens.length ? '>' : '';
 }
 
 module.exports = {
