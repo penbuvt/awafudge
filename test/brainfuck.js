@@ -73,4 +73,13 @@ describe('brainfuck parser', () => {
 
     assert.strictEqual(actual, expected);
   });
+
+  it('ignores non-instruction characters', () => {
+    const input = '`1234567890=qwertyuiop\\asdfghjkl;\'zxcvbnm/ \n~!@#$%^&*()_QWERTYUIOP{}|ASDFGHJKL:"ZXCVBNM?';
+    const expected = '';
+
+    const actual = parse(input);
+
+    assert.strictEqual(actual, expected);
+  });
 });
