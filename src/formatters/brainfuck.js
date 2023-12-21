@@ -14,7 +14,7 @@ function format(tokens) {
       case TokenType.Write:
         return '.';
       case TokenType.Loop:
-        return '[]';
+        return '[' + format(token.content) + ']';
     }
   }).join('');
 }
