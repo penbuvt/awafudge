@@ -1,8 +1,10 @@
+const { TokenType } = require('../token-types');
+
 function format(tokens) {
   return tokens.length ? {
-    RIGHT_SHIFT: '>',
-    LEFT_SHIFT: '<',
-    INCREMENT: '+',
+    [TokenType.RightShift]: '>',
+    [TokenType.LeftShift]: '<',
+    [TokenType.Increment]: '+',
   }[tokens[0].type].repeat(tokens[0].count) : '';
 }
 
