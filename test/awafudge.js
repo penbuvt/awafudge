@@ -189,6 +189,15 @@ describe('awafudge parser', () => {
     assert.strictEqual(actual, expected);
   });
 
+  it('parses adjacent instructions with non-instruction characters in between', () => {
+    const input = 'awa|wa';
+    const expected = '+-';
+
+    const actual = parse(input);
+
+    assert.strictEqual(actual, expected);
+  });
+
   describe('unambiguous adjacent instructions without whitespace', () => {
     it('parses instructions after tildes', () => {
       const input = 'awawa~awa';
