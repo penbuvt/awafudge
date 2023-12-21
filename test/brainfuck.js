@@ -146,6 +146,22 @@ describe('brainfuck parser', () => {
     assert.strictEqual(actual, expected);
   });
 
+  it('throws on incomplete loop', () => {
+    const input = '[';
+
+    const actual = () => parse(input);
+
+    assert.throws(actual, Error);
+  });
+
+  it('throws on stray loop end', () => {
+    const input = ']';
+
+    const actual = () => parse(input);
+
+    assert.throws(actual, Error);
+  });
+
   describe('potential ambiguous cases', () => {
     // These cases require separating the tokens with a space on output
     // to avoid ambiguous tokens.
