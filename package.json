@@ -4,7 +4,7 @@
   "description": "awawawa",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha --recursive",
     "build:parser:brainfuck": "jison -o src/parsers/brainfuck.js src/parsers/brainfuck.jison",
     "build:parser:awafudge": "jison -o src/parsers/awafudge.js src/parsers/awafudge.jison"
   },
@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/penbuvt/awafudge#readme",
   "devDependencies": {
-    "jison": "^0.4.18"
+    "jison": "^0.4.18",
+    "mocha": "^10.2.0"
   }
 }
