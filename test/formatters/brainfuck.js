@@ -93,4 +93,13 @@ describe('brainfuck formatter', () => {
 
     assert.strictEqual(actual, expected);
   });
+
+  it('formats empty loops', () => {
+    const input = [{ type: TokenType.Loop, content: [] }];
+    const expected = '[]';
+
+    const actual = format(input);
+
+    assert.strictEqual(actual, expected);
+  });
 });
