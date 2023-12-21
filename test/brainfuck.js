@@ -137,6 +137,15 @@ describe('brainfuck parser', () => {
     assert.strictEqual(actual, expected);
   });
 
+  it('parses loop instructions with content', () => {
+    const input = '[><+-.,[]]';
+    const expected = '? awa~ wa~ awa wa.,?!!';
+
+    const actual = parse(input);
+
+    assert.strictEqual(actual, expected);
+  });
+
   describe('potential ambiguous cases', () => {
     // These cases require separating the tokens with a space on output
     // to avoid ambiguous tokens.
