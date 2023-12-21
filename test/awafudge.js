@@ -189,6 +189,44 @@ describe('awafudge parser', () => {
     assert.strictEqual(actual, expected);
   });
 
+  describe('unambiguous adjacent instructions without whitespace', () => {
+    it('parses instructions after tildes', () => {
+      const input = 'awawa~awa';
+      const expected = '>>+';
+
+      const actual = parse(input);
+
+      assert.strictEqual(actual, expected);
+    });
+
+    it('parses instructions with adacent "a"s', () => {
+      const input = 'awaawa~';
+      const expected = '+>';
+
+      const actual = parse(input);
+
+      assert.strictEqual(actual, expected);
+    });
+
+    it('parses instructions around reads and writes', () => {
+      const input = 'awa,wa.wa';
+      const expected = '+,-.-';
+
+      const actual = parse(input);
+
+      assert.strictEqual(actual, expected);
+    });
+
+    it('parses instructions adjacent to loops', () => {
+      const input = 'wa?wa?wa!wa!wa';
+      const expected = '-[-[-]-]-';
+
+      const actual = parse(input);
+
+      assert.strictEqual(actual, expected);
+    });
+  });
+
   it('ignores non-instruction characters', () => {
     const input = '`1234567890=qertyuiop\\sdfghjkl;\'zxcvbnm/ \n@#$%^&*()_QWERTYUIOP{}|ASDFGHJKL:"ZXCVBNM';
     const expected = '';
