@@ -64,4 +64,31 @@ describe('brainfuck formatter', () => {
 
     assert.strictEqual(actual, expected);
   });
+
+  it('formats an empty increment instruction', () => {
+    const input = [{ type: 'INCREMENT', count: 0 }];
+    const expected = '';
+
+    const actual = format(input);
+
+    assert.strictEqual(actual, expected);
+  });
+
+  it('formats a single increment instruction', () => {
+    const input = [{ type: 'INCREMENT', count: 1 }];
+    const expected = '+';
+
+    const actual = format(input);
+
+    assert.strictEqual(actual, expected);
+  });
+
+  it('formats multiple increment instructions', () => {
+    const input = [{ type: 'INCREMENT', count: 3 }];
+    const expected = '+++';
+
+    const actual = format(input);
+
+    assert.strictEqual(actual, expected);
+  });
 });
