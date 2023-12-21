@@ -37,4 +37,31 @@ describe('brainfuck formatter', () => {
 
     assert.strictEqual(actual, expected);
   });
+
+  it('formats an empty left shift instruction', () => {
+    const input = [{ type: 'LEFT_SHIFT', count: 0 }];
+    const expected = '';
+
+    const actual = format(input);
+
+    assert.strictEqual(actual, expected);
+  });
+
+  it('formats a single left shift instruction', () => {
+    const input = [{ type: 'LEFT_SHIFT', count: 1 }];
+    const expected = '<';
+
+    const actual = format(input);
+
+    assert.strictEqual(actual, expected);
+  });
+
+  it('formats multiple left shift instructions', () => {
+    const input = [{ type: 'LEFT_SHIFT', count: 3 }];
+    const expected = '<<<';
+
+    const actual = format(input);
+
+    assert.strictEqual(actual, expected);
+  });
 });
