@@ -4,11 +4,17 @@ function format(tokens) {
   return tokens.map((token) => {
     switch (token.type) {
       case TokenType.RightShift:
-        return 'a' + 'wa'.repeat(token.count) + '~';
+        return formatRepeatableWa('a', token.count, '~');
       case TokenType.LeftShift:
-        return 'wa'.repeat(token.count) + '~';
+        return formatRepeatableWa('', token.count, '~');
+      case TokenType.Increment:
+        return formatRepeatableWa('a', token.count, '');
     }
   }).join('');
+}
+
+function formatRepeatableWa(prefix, count, suffix) {
+  return prefix + 'wa'.repeat(count) + suffix;
 }
 
 module.exports = {

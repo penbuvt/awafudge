@@ -67,11 +67,32 @@ describe('awafudge formatter', () => {
     assert.strictEqual(actual, expected);
   });
 
-  it('formats an empty increment instruction');
+  it('formats an empty increment instruction', () => {
+    const input = [{ type: TokenType.Increment, count: 0 }];
+    const expected = 'a';
 
-  it('formats a single increment instruction');
+    const actual = format(input);
 
-  it('formats multiple increment instructions');
+    assert.strictEqual(actual, expected);
+  });
+
+  it('formats a single increment instruction', () => {
+    const input = [{ type: TokenType.Increment, count: 1 }];
+    const expected = 'awa';
+
+    const actual = format(input);
+
+    assert.strictEqual(actual, expected);
+  });
+
+  it('formats multiple increment instructions', () => {
+    const input = [{ type: TokenType.Increment, count: 3 }];
+    const expected = 'awawawa';
+
+    const actual = format(input);
+
+    assert.strictEqual(actual, expected);
+  });
 
   it('formats an empty decrement instruction');
 
