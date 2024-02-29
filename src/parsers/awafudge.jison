@@ -20,11 +20,11 @@
 
 %%
 
-program: operations EOF {return $1.join('').trim();};
+program: operations SPACE? EOF {return $1.join('').trim();};
 
 operations: /* empty */ {$$ = [];}
-          | operations SPACE {$$ = $1;}
           | operations operation {$$ = $1.concat([$2]);}
+          | operations SPACE operation {$$ = $1.concat([$3]);}
           ;
 
 operation: decrements {$$ = $1;}
@@ -42,7 +42,8 @@ decrements: was {$$ = '-'.repeat($1.length);};
 
 increments: awas {$$ = '+'.repeat($1.length);};
 
-leftshifts: was '~' {$$ = '<'.repeat($1.length);};
+leftshifts: was '~' {$$ = '<'.repeat($1.length);}
+          | '~' {$$ = ''};
 
 rightshifts: awas '~' {$$ = '>'.repeat($1.length);};
 
