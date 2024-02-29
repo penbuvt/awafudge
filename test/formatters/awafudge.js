@@ -94,11 +94,32 @@ describe('awafudge formatter', () => {
     assert.strictEqual(actual, expected);
   });
 
-  it('formats an empty decrement instruction');
+  it('formats an empty decrement instruction', () => {
+    const input = [{ type: TokenType.Decrement, count: 0 }];
+    const expected = '';
 
-  it('formats a single decrement instruction');
+    const actual = format(input);
 
-  it('formats multiple decrement instructions');
+    assert.strictEqual(actual, expected);
+  });
+
+  it('formats a single decrement instruction', () => {
+    const input = [{ type: TokenType.Decrement, count: 1 }];
+    const expected = 'wa';
+
+    const actual = format(input);
+
+    assert.strictEqual(actual, expected);
+  });
+
+  it('formats multiple decrement instructions', () => {
+    const input = [{ type: TokenType.Decrement, count: 3 }];
+    const expected = 'wawawa';
+
+    const actual = format(input);
+
+    assert.strictEqual(actual, expected);
+  });
 
   it('formats write instructions');
 

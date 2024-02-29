@@ -9,6 +9,8 @@ function format(tokens) {
         return formatRepeatableWa('', token.count, '~');
       case TokenType.Increment:
         return formatRepeatableWa('a', token.count, '');
+      case TokenType.Decrement:
+        return formatRepeatableWa('', token.count, '');
     }
   }).join('');
 }
