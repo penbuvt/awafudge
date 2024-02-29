@@ -2,8 +2,8 @@ const { TokenType } = require('../token-types');
 
 const DELETE_PREV_WHITESPACE = '__DELWS__';
 
-function format(tokens) {
-  return tokens.map((token) => {
+function format(tokens, { processDirectives = true } = {}) {
+  const formatted = tokens.map((token) => {
     switch (token.type) {
       case TokenType.RightShift:
         return formatRepeatableWa('a', token.count, '~');
@@ -20,9 +20,16 @@ function format(tokens) {
       case TokenType.Loop:
         return !token.content.length
           ? DELETE_PREV_WHITESPACE + '?!'
-          : DELETE_PREV_WHITESPACE + '? ' + format(token.content) + '!';
+          : DELETE_PREV_WHITESPACE
+            + '? '
+            + format(token.content, { processDirectives: false })
+            + '!';
     }
-  }).join(' ').replaceAll(new RegExp(' ?' + DELETE_PREV_WHITESPACE, 'g'), '');
+  }).join(' ');
+
+  return processDirectives
+    ? formatted.replaceAll(new RegExp(' ?' + DELETE_PREV_WHITESPACE, 'g'), '')
+    : formatted;
 }
 
 function formatRepeatableWa(prefix, count, suffix) {
