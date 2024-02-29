@@ -15,6 +15,8 @@ function format(tokens) {
         return '.';
       case TokenType.Read:
         return ',';
+      case TokenType.Loop:
+        return '?!';
     }
   }).join(' ');
 }
