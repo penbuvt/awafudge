@@ -151,6 +151,42 @@ describe('awafudge formatter', () => {
     assert.strictEqual(actual, expected);
   });
 
+  it('formats potentially ambiguous Increment+Decrement with interceding whitespace', () => {
+    const input = [
+      { type: TokenType.Increment, count: 1 },
+      { type: TokenType.Decrement, count: 1 },
+    ];
+    const expected = 'awa wa';
+
+    const actual = format(input);
+
+    assert.strictEqual(actual, expected);
+  });
+
+  it('formats potentially ambiguous Increment+LeftShift with interceding whitespace', () => {
+    const input = [
+      { type: TokenType.Increment, count: 1 },
+      { type: TokenType.LeftShift, count: 1 },
+    ];
+    const expected = 'awa wa~';
+
+    const actual = format(input);
+
+    assert.strictEqual(actual, expected);
+  });
+
+  it('formats potentially ambiguous Decrement+LeftShift with interceding whitespace', () => {
+    const input = [
+      { type: TokenType.Decrement, count: 1 },
+      { type: TokenType.LeftShift, count: 1 },
+    ];
+    const expected = 'wa wa~';
+
+    const actual = format(input);
+
+    assert.strictEqual(actual, expected);
+  });
+
   it('formats empty loops');
 
   it('formats loops with content');
