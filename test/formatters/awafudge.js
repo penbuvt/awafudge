@@ -121,7 +121,14 @@ describe('awafudge formatter', () => {
     assert.strictEqual(actual, expected);
   });
 
-  it('formats write instructions');
+  it('formats write instructions', () => {
+    const input = [{ type: TokenType.Write }];
+    const expected = '.';
+
+    const actual = format(input);
+
+    assert.strictEqual(actual, expected);
+  });
 
   it('formats read instructions');
 

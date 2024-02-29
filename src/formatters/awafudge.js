@@ -11,6 +11,8 @@ function format(tokens) {
         return formatRepeatableWa('a', token.count, '');
       case TokenType.Decrement:
         return formatRepeatableWa('', token.count, '');
+      case TokenType.Write:
+        return '.';
     }
   }).join('');
 }
