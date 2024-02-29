@@ -6,10 +6,12 @@ function format(tokens) {
       case TokenType.RightShift:
       case TokenType.LeftShift:
       case TokenType.Increment:
+      case TokenType.Decrement:
         return {
           [TokenType.RightShift]: '>',
           [TokenType.LeftShift]: '<',
           [TokenType.Increment]: '+',
+          [TokenType.Decrement]: '-',
         }[token.type].repeat(token.count);
       case TokenType.Write:
         return '.';

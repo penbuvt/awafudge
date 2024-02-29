@@ -94,6 +94,33 @@ describe('brainfuck formatter', () => {
     assert.strictEqual(actual, expected);
   });
 
+  it('formats an empty decrement instruction', () => {
+    const input = [{ type: TokenType.Decrement, count: 0 }];
+    const expected = '';
+
+    const actual = format(input);
+
+    assert.strictEqual(actual, expected);
+  });
+
+  it('formats a single decrement instruction', () => {
+    const input = [{ type: TokenType.Decrement, count: 1 }];
+    const expected = '-';
+
+    const actual = format(input);
+
+    assert.strictEqual(actual, expected);
+  });
+
+  it('formats multiple decrement instructions', () => {
+    const input = [{ type: TokenType.Decrement, count: 3 }];
+    const expected = '---';
+
+    const actual = format(input);
+
+    assert.strictEqual(actual, expected);
+  });
+
   it('formats write instructions', () => {
     const input = [{ type: TokenType.Write }];
     const expected = '.';
