@@ -13,11 +13,32 @@ describe('awafudge formatter', () => {
     assert.strictEqual(actual, expected);
   });
 
-  it('formats an empty right shift instruction');
+  it('formats an empty right shift instruction', () => {
+    const input = [{ type: TokenType.RightShift, count: 0 }];
+    const expected = 'a~';
 
-  it('formats a single right shift instruction');
+    const actual = format(input);
 
-  it('formats multiple right shift instructions');
+    assert.strictEqual(actual, expected);
+  });
+
+  it('formats a single right shift instruction', () => {
+    const input = [{ type: TokenType.RightShift, count: 1 }];
+    const expected = 'awa~';
+
+    const actual = format(input);
+
+    assert.strictEqual(actual, expected);
+  });
+
+  it('formats multiple right shift instructions', () => {
+    const input = [{ type: TokenType.RightShift, count: 3 }];
+    const expected = 'awawawa~';
+
+    const actual = format(input);
+
+    assert.strictEqual(actual, expected);
+  });
 
   it('formats an empty left shift instruction');
 
