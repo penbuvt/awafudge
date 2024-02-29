@@ -1,5 +1,7 @@
 const { TokenType } = require('../token-types');
 
+const DELETE_PREV_WHITESPACE = '__DELWS__';
+
 function format(tokens) {
   return tokens.map((token) => {
     switch (token.type) {
@@ -17,10 +19,10 @@ function format(tokens) {
         return ',';
       case TokenType.Loop:
         return !token.content.length
-          ? '?!'
-          : '? ' + format(token.content) + '!';
+          ? DELETE_PREV_WHITESPACE + '?!'
+          : DELETE_PREV_WHITESPACE + '? ' + format(token.content) + '!';
     }
-  }).join(' ');
+  }).join(' ').replaceAll(new RegExp(' ?' + DELETE_PREV_WHITESPACE, 'g'), '');
 }
 
 function formatRepeatableWa(prefix, count, suffix) {
