@@ -139,7 +139,17 @@ describe('awafudge formatter', () => {
     assert.strictEqual(actual, expected);
   });
 
-  it('formats adjacent instructions');
+  it('formats adjacent instructions', () => {
+    const input = [
+      { type: TokenType.RightShift, count: 1 },
+      { type: TokenType.Increment, count: 1 },
+    ];
+    const expected = 'awa~ awa';
+
+    const actual = format(input);
+
+    assert.strictEqual(actual, expected);
+  });
 
   it('formats empty loops');
 

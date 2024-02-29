@@ -16,7 +16,7 @@ function format(tokens) {
       case TokenType.Read:
         return ',';
     }
-  }).join('');
+  }).join(' ');
 }
 
 function formatRepeatableWa(prefix, count, suffix) {
