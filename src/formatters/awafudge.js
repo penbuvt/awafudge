@@ -5,6 +5,8 @@ function format(tokens) {
     switch (token.type) {
       case TokenType.RightShift:
         return 'a' + 'wa'.repeat(token.count) + '~';
+      case TokenType.LeftShift:
+        return 'wa'.repeat(token.count) + '~';
     }
   }).join('');
 }

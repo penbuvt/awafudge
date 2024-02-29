@@ -40,11 +40,32 @@ describe('awafudge formatter', () => {
     assert.strictEqual(actual, expected);
   });
 
-  it('formats an empty left shift instruction');
+  it('formats an empty left shift instruction', () => {
+    const input = [{ type: TokenType.LeftShift, count: 0 }];
+    const expected = '~';
 
-  it('formats a single left shift instruction');
+    const actual = format(input);
 
-  it('formats multiple left shift instructions');
+    assert.strictEqual(actual, expected);
+  });
+
+  it('formats a single left shift instruction', () => {
+    const input = [{ type: TokenType.LeftShift, count: 1 }];
+    const expected = 'wa~';
+
+    const actual = format(input);
+
+    assert.strictEqual(actual, expected);
+  });
+
+  it('formats multiple left shift instructions', () => {
+    const input = [{ type: TokenType.LeftShift, count: 3 }];
+    const expected = 'wawawa~';
+
+    const actual = format(input);
+
+    assert.strictEqual(actual, expected);
+  });
 
   it('formats an empty increment instruction');
 
