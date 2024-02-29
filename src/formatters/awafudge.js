@@ -13,6 +13,8 @@ function format(tokens) {
         return formatRepeatableWa('', token.count, '');
       case TokenType.Write:
         return '.';
+      case TokenType.Read:
+        return ',';
     }
   }).join('');
 }
