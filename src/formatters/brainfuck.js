@@ -15,6 +15,8 @@ function format(tokens) {
         }[token.type].repeat(token.count);
       case TokenType.Write:
         return '.';
+      case TokenType.Read:
+        return ',';
       case TokenType.Loop:
         return '[' + format(token.content) + ']';
     }

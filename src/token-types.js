@@ -4,6 +4,7 @@ const TokenType = {
   Increment: 'INCREMENT',
   Decrement: 'DECREMENT',
   Write: 'WRITE',
+  Read: 'READ',
   Loop: 'LOOP',
 };
 
