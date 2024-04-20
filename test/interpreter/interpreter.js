@@ -30,5 +30,17 @@ describe('interpreter', () => {
       assert.strictEqual(result.done, true);
       assert.strictEqual(interpreter.state[0], 1);
     });
+
+    it('runs multiple increment instructions', () => {
+      const input = [
+        { type: TokenType.Increment, count: 3 },
+      ];
+
+      const runner = interpreter.run(input);
+      const result = runner.next();
+
+      assert.strictEqual(result.done, true);
+      assert.strictEqual(interpreter.state[0], 3);
+    });
   });
 });

@@ -10,7 +10,9 @@ class Interpreter {
     for (let token of program) {
       switch (token.type) {
         case TokenType.Increment:
-          this.state[this.pointer]++;
+          for (let count = token.count; count > 0; count--) {
+            this.state[this.pointer]++;
+          }
           break;
       }
     }
