@@ -19,6 +19,45 @@ describe('interpreter', () => {
       assert.strictEqual(result.done, true);
     });
 
+    it('runs an empty right shift instruction', () => {
+      const input = [
+        { type: TokenType.RightShift, count: 0 },
+      ];
+
+      const runner = interpreter.run(input);
+      const result = runner.next();
+
+      assert.strictEqual(result.done, true);
+      assert.strictEqual(interpreter.pointer, 0);
+      assert.strictEqual(interpreter.state[0], 0);
+    });
+
+    it('runs a single right shift instruction', () => {
+      const input = [
+        { type: TokenType.RightShift, count: 1 },
+      ];
+
+      const runner = interpreter.run(input);
+      const result = runner.next();
+
+      assert.strictEqual(result.done, true);
+      assert.strictEqual(interpreter.pointer, 1);
+      assert.strictEqual(interpreter.state[1], 0);
+    });
+
+    it('runs multiple right shift instructions', () => {
+      const input = [
+        { type: TokenType.RightShift, count: 3 },
+      ];
+
+      const runner = interpreter.run(input);
+      const result = runner.next();
+
+      assert.strictEqual(result.done, true);
+      assert.strictEqual(interpreter.pointer, 3);
+      assert.strictEqual(interpreter.state[3], 0);
+    });
+
     it('runs an empty increment instruction', () => {
       const input = [
         { type: TokenType.Increment, count: 0 },

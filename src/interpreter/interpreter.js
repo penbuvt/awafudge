@@ -19,6 +19,14 @@ class Interpreter {
             this.state[this.pointer]--;
           }
           break;
+        case TokenType.RightShift:
+          for (let count = token.count; count > 0; count--) {
+            this.pointer++;
+            if (this.state[this.pointer] === undefined) {
+              this.state[this.pointer] = 0;
+            }
+          }
+          break;
       }
     }
   }
