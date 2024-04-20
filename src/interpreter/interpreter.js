@@ -14,6 +14,11 @@ class Interpreter {
             this.state[this.pointer]++;
           }
           break;
+        case TokenType.Decrement:
+          for (let count = token.count; count > 0; count--) {
+            this.state[this.pointer]--;
+          }
+          break;
       }
     }
   }

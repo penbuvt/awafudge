@@ -53,5 +53,44 @@ describe('interpreter', () => {
       assert.strictEqual(result.done, true);
       assert.strictEqual(interpreter.state[0], 3);
     });
+
+    it('runs an empty decrement instruction', () => {
+      const input = [
+        { type: TokenType.Decrement, count: 0 },
+      ];
+      interpreter.state[0] = 50;
+
+      const runner = interpreter.run(input);
+      const result = runner.next();
+
+      assert.strictEqual(result.done, true);
+      assert.strictEqual(interpreter.state[0], 50);
+    });
+
+    it('runs a single decrement instruction', () => {
+      const input = [
+        { type: TokenType.Decrement, count: 1 },
+      ];
+      interpreter.state[0] = 50;
+
+      const runner = interpreter.run(input);
+      const result = runner.next();
+
+      assert.strictEqual(result.done, true);
+      assert.strictEqual(interpreter.state[0], 49);
+    });
+
+    it('runs multiple decrement instructions', () => {
+      const input = [
+        { type: TokenType.Decrement, count: 3 },
+      ];
+      interpreter.state[0] = 50;
+
+      const runner = interpreter.run(input);
+      const result = runner.next();
+
+      assert.strictEqual(result.done, true);
+      assert.strictEqual(interpreter.state[0], 47);
+    });
   });
 });
