@@ -93,6 +93,19 @@ describe('interpreter', () => {
       assert.strictEqual(interpreter.state[0], 3);
     });
 
+    it('overflows the cell when incrementing past the max', () => {
+      const input = [
+        { type: TokenType.Increment, count: 1 },
+      ];
+      interpreter.state[0] = 255;
+
+      const runner = interpreter.run(input);
+      const result = runner.next();
+
+      assert.strictEqual(result.done, true);
+      assert.strictEqual(interpreter.state[0], 0);
+    });
+
     it('runs an empty decrement instruction', () => {
       const input = [
         { type: TokenType.Decrement, count: 0 },
@@ -130,6 +143,19 @@ describe('interpreter', () => {
 
       assert.strictEqual(result.done, true);
       assert.strictEqual(interpreter.state[0], 47);
+    });
+
+    it('underflows the cell when decrementing from 0', () => {
+      const input = [
+        { type: TokenType.Decrement, count: 1 },
+      ];
+      interpreter.state[0] = 0;
+
+      const runner = interpreter.run(input);
+      const result = runner.next();
+
+      assert.strictEqual(result.done, true);
+      assert.strictEqual(interpreter.state[0], 255);
     });
   });
 });

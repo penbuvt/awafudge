@@ -1,5 +1,7 @@
 const { TokenType } = require('../token-types');
 
+const CELL_SIZE = 8;
+
 class Interpreter {
   constructor() {
     this.state = [0];
@@ -11,12 +13,14 @@ class Interpreter {
       switch (token.type) {
         case TokenType.Increment:
           for (let count = token.count; count > 0; count--) {
-            this.state[this.pointer]++;
+            const size = 2 ** CELL_SIZE;
+            this.state[this.pointer] = (this.state[this.pointer] + 1) % size;
           }
           break;
         case TokenType.Decrement:
           for (let count = token.count; count > 0; count--) {
-            this.state[this.pointer]--;
+            const size = 2 ** CELL_SIZE;
+            this.state[this.pointer] = (this.state[this.pointer] - 1 + size) % size;
           }
           break;
         case TokenType.RightShift:
