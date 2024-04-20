@@ -20,7 +20,7 @@
 
 %%
 
-program: operations SPACE? EOF {return $1.join('').trim();};
+program: operations SPACE? EOF {return $1;};
 
 operations: /* empty */ {$$ = [];}
           | operations operation {$$ = $1.concat([$2]);}
@@ -31,21 +31,21 @@ operation: decrements {$$ = $1;}
          | increments {$$ = $1;}
          | leftshifts {$$ = $1;}
          | rightshifts {$$ = $1;}
-         | ',' {$$ = $1;}
-         | '.' {$$ = $1;}
+         | ',' {$$ = { type: 'READ' };}
+         | '.' {$$ = { type: 'WRITE' };}
          | loop
          ;
 
-loop: '?' operations '!' {$$ = '[' + $2.join('') + ']';};
+loop: '?' operations '!' {$$ = { type: 'LOOP', content: $2 };};
 
-decrements: was {$$ = '-'.repeat($1.length);};
+decrements: was {$$ = { type: 'DECREMENT', count: $1.length };};
 
-increments: awas {$$ = '+'.repeat($1.length);};
+increments: awas {$$ =  { type: 'INCREMENT', count: $1.length };};
 
-leftshifts: was '~' {$$ = '<'.repeat($1.length);}
-          | '~' {$$ = ''};
+leftshifts: was '~' {$$ = { type: 'LEFT_SHIFT', count: $1.length };}
+          | '~' {$$ = { type: 'LEFT_SHIFT', count: 0 }};
 
-rightshifts: awas '~' {$$ = '>'.repeat($1.length);};
+rightshifts: awas '~' {$$ = { type: 'RIGHT_SHIFT', count: $1.length };};
 
 was: WA+ {$$ = $1;};
 
