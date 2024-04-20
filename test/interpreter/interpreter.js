@@ -19,6 +19,17 @@ describe('interpreter', () => {
       assert.strictEqual(result.done, true);
     });
 
+    it('runs an empty increment instruction', () => {
+      const input = [
+        { type: TokenType.Increment, count: 0 },
+      ];
+
+      const runner = interpreter.run(input);
+      const result = runner.next();
+
+      assert.strictEqual(result.done, true);
+      assert.strictEqual(interpreter.state[0], 0);
+    });
     it('runs a single increment instruction', () => {
       const input = [
         { type: TokenType.Increment, count: 1 },
