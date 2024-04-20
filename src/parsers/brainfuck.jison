@@ -20,30 +20,30 @@
 
 %%
 
-program: operations EOF {return $1.join('').trim();};
+program: operations EOF {return $1;};
 
 operations: /* empty */ {$$ = [];}
           | operations operation {$$ = ($1.push($2), $1);}
           ;
 
-operation: LEFTSHIFTS {$$ = ' ' + 'wa'.repeat(yyleng) + '~';}
-         | RIGHTSHIFTS {$$ = ' a' + 'wa'.repeat(yyleng) + '~';}
-         | INCREMENTS {$$ = ' a' + 'wa'.repeat(yyleng);}
-         | DECREMENTS {$$ = ' ' + 'wa'.repeat(yyleng);}
-         | INPUT {$$ = $1;}
-         | OUTPUT {$$ = $1;}
+operation: LEFTSHIFTS {$$ = { type: 'LEFT_SHIFT', count: yyleng };}
+         | RIGHTSHIFTS {$$ = { type: 'RIGHT_SHIFT', count: yyleng };}
+         | INCREMENTS {$$ = { type: 'INCREMENT', count: yyleng };}
+         | DECREMENTS {$$ = { type: 'DECREMENT', count: yyleng };}
+         | INPUT {$$ = { type: 'READ' };}
+         | OUTPUT {$$ = { type: 'WRITE' };}
          | loop
          ;
 
-loop: '[' operations ']' {$$ = '?' + $2.join('') + '!';};
+loop: '[' operations ']' {$$ = { type: 'LOOP', content: $2 };};
 
-LEFTSHIFT: '<' {$$ = 'wa';};
+LEFTSHIFT: '<';
 
-RIGHTSHIFT: '>' {$$ = 'wa';};
+RIGHTSHIFT: '>';
 
-INCREMENT: '+' {$$ = 'wa';};
+INCREMENT: '+';
 
-DECREMENT: '-' {$$ = 'wa';};
+DECREMENT: '-';
 
 INPUT: ',';
 

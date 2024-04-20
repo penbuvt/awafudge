@@ -84,7 +84,7 @@ performAction: function anonymous(yytext, yyleng, yylineno, yy, yystate /* actio
 var $0 = $$.length - 1;
 switch (yystate) {
 case 1:
-return $$[$0-1].join('').trim();
+return $$[$0-1];
 break;
 case 2:
 this.$ = [];
@@ -93,25 +93,25 @@ case 3:
 this.$ = ($$[$0-1].push($$[$0]), $$[$0-1]);
 break;
 case 4:
-this.$ = ' ' + 'wa'.repeat(yyleng) + '~';
+this.$ = { type: 'LEFT_SHIFT', count: yyleng };
 break;
 case 5:
-this.$ = ' a' + 'wa'.repeat(yyleng) + '~';
+this.$ = { type: 'RIGHT_SHIFT', count: yyleng };
 break;
 case 6:
-this.$ = ' a' + 'wa'.repeat(yyleng);
+this.$ = { type: 'INCREMENT', count: yyleng };
 break;
 case 7:
-this.$ = ' ' + 'wa'.repeat(yyleng);
+this.$ = { type: 'DECREMENT', count: yyleng };
 break;
-case 8: case 9:
-this.$ = $$[$0];
+case 8:
+this.$ = { type: 'READ' };
+break;
+case 9:
+this.$ = { type: 'WRITE' };
 break;
 case 11:
-this.$ = '?' + $$[$0-1].join('') + '!';
-break;
-case 12: case 13: case 14: case 15:
-this.$ = 'wa';
+this.$ = { type: 'LOOP', content: $$[$0-1] };
 break;
 }
 },
