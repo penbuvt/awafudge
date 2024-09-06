@@ -1,11 +1,12 @@
-const { format } = require('../../src/formatters/awafudge');
-const assert = require('node:assert').strict;
+import { format } from '../../src/formatters/awafudge';
+import { strict as assert } from 'node:assert';
 
-const { TokenType } = require('../../src/token-types');
+import { Token } from '../../src/tokens';
+import { TokenType } from '../../src/token-types';
 
 describe('awafudge formatter', () => {
   it('formats an empty token list', () => {
-    const input = [];
+    const input: Token[] = [];
     const expected = '';
 
     const actual = format(input);
@@ -14,7 +15,7 @@ describe('awafudge formatter', () => {
   });
 
   it('formats an empty right shift instruction', () => {
-    const input = [{ type: TokenType.RightShift, count: 0 }];
+    const input: Token[] = [{ type: TokenType.RightShift, count: 0 }];
     const expected = 'a~';
 
     const actual = format(input);
@@ -23,7 +24,7 @@ describe('awafudge formatter', () => {
   });
 
   it('formats a single right shift instruction', () => {
-    const input = [{ type: TokenType.RightShift, count: 1 }];
+    const input: Token[] = [{ type: TokenType.RightShift, count: 1 }];
     const expected = 'awa~';
 
     const actual = format(input);
@@ -32,7 +33,7 @@ describe('awafudge formatter', () => {
   });
 
   it('formats multiple right shift instructions', () => {
-    const input = [{ type: TokenType.RightShift, count: 3 }];
+    const input: Token[] = [{ type: TokenType.RightShift, count: 3 }];
     const expected = 'awawawa~';
 
     const actual = format(input);
@@ -41,7 +42,7 @@ describe('awafudge formatter', () => {
   });
 
   it('formats an empty left shift instruction', () => {
-    const input = [{ type: TokenType.LeftShift, count: 0 }];
+    const input: Token[] = [{ type: TokenType.LeftShift, count: 0 }];
     const expected = '~';
 
     const actual = format(input);
@@ -50,7 +51,7 @@ describe('awafudge formatter', () => {
   });
 
   it('formats a single left shift instruction', () => {
-    const input = [{ type: TokenType.LeftShift, count: 1 }];
+    const input: Token[] = [{ type: TokenType.LeftShift, count: 1 }];
     const expected = 'wa~';
 
     const actual = format(input);
@@ -59,7 +60,7 @@ describe('awafudge formatter', () => {
   });
 
   it('formats multiple left shift instructions', () => {
-    const input = [{ type: TokenType.LeftShift, count: 3 }];
+    const input: Token[] = [{ type: TokenType.LeftShift, count: 3 }];
     const expected = 'wawawa~';
 
     const actual = format(input);
@@ -68,7 +69,7 @@ describe('awafudge formatter', () => {
   });
 
   it('formats an empty increment instruction', () => {
-    const input = [{ type: TokenType.Increment, count: 0 }];
+    const input: Token[] = [{ type: TokenType.Increment, count: 0 }];
     const expected = 'a';
 
     const actual = format(input);
@@ -77,7 +78,7 @@ describe('awafudge formatter', () => {
   });
 
   it('formats a single increment instruction', () => {
-    const input = [{ type: TokenType.Increment, count: 1 }];
+    const input: Token[] = [{ type: TokenType.Increment, count: 1 }];
     const expected = 'awa';
 
     const actual = format(input);
@@ -86,7 +87,7 @@ describe('awafudge formatter', () => {
   });
 
   it('formats multiple increment instructions', () => {
-    const input = [{ type: TokenType.Increment, count: 3 }];
+    const input: Token[] = [{ type: TokenType.Increment, count: 3 }];
     const expected = 'awawawa';
 
     const actual = format(input);
@@ -95,7 +96,7 @@ describe('awafudge formatter', () => {
   });
 
   it('formats an empty decrement instruction', () => {
-    const input = [{ type: TokenType.Decrement, count: 0 }];
+    const input: Token[] = [{ type: TokenType.Decrement, count: 0 }];
     const expected = '';
 
     const actual = format(input);
@@ -104,7 +105,7 @@ describe('awafudge formatter', () => {
   });
 
   it('formats a single decrement instruction', () => {
-    const input = [{ type: TokenType.Decrement, count: 1 }];
+    const input: Token[] = [{ type: TokenType.Decrement, count: 1 }];
     const expected = 'wa';
 
     const actual = format(input);
@@ -113,7 +114,7 @@ describe('awafudge formatter', () => {
   });
 
   it('formats multiple decrement instructions', () => {
-    const input = [{ type: TokenType.Decrement, count: 3 }];
+    const input: Token[] = [{ type: TokenType.Decrement, count: 3 }];
     const expected = 'wawawa';
 
     const actual = format(input);
@@ -122,7 +123,7 @@ describe('awafudge formatter', () => {
   });
 
   it('formats write instructions', () => {
-    const input = [{ type: TokenType.Write }];
+    const input: Token[] = [{ type: TokenType.Write }];
     const expected = '.';
 
     const actual = format(input);
@@ -131,7 +132,7 @@ describe('awafudge formatter', () => {
   });
 
   it('formats read instructions', () => {
-    const input = [{ type: TokenType.Read }];
+    const input: Token[] = [{ type: TokenType.Read }];
     const expected = ',';
 
     const actual = format(input);
@@ -140,7 +141,7 @@ describe('awafudge formatter', () => {
   });
 
   it('formats adjacent instructions', () => {
-    const input = [
+    const input: Token[] = [
       { type: TokenType.RightShift, count: 1 },
       { type: TokenType.Increment, count: 1 },
     ];
@@ -152,7 +153,7 @@ describe('awafudge formatter', () => {
   });
 
   it('formats potentially ambiguous Increment+Decrement with interceding whitespace', () => {
-    const input = [
+    const input: Token[] = [
       { type: TokenType.Increment, count: 1 },
       { type: TokenType.Decrement, count: 1 },
     ];
@@ -164,7 +165,7 @@ describe('awafudge formatter', () => {
   });
 
   it('formats potentially ambiguous Increment+LeftShift with interceding whitespace', () => {
-    const input = [
+    const input: Token[] = [
       { type: TokenType.Increment, count: 1 },
       { type: TokenType.LeftShift, count: 1 },
     ];
@@ -176,7 +177,7 @@ describe('awafudge formatter', () => {
   });
 
   it('formats potentially ambiguous Decrement+LeftShift with interceding whitespace', () => {
-    const input = [
+    const input: Token[] = [
       { type: TokenType.Decrement, count: 1 },
       { type: TokenType.LeftShift, count: 1 },
     ];
@@ -188,7 +189,7 @@ describe('awafudge formatter', () => {
   });
 
   it('formats empty loops', () => {
-    const input = [{ type: TokenType.Loop, content: [] }];
+    const input: Token[] = [{ type: TokenType.Loop, content: [] }];
     const expected = '?!';
 
     const actual = format(input);
@@ -197,7 +198,7 @@ describe('awafudge formatter', () => {
   });
 
   it('formats loops with content', () => {
-    const input = [{ type: TokenType.Loop, content: [
+    const input: Token[] = [{ type: TokenType.Loop, content: [
       { type: TokenType.RightShift, count: 1 },
       { type: TokenType.Increment, count: 1 },
     ] }];
@@ -209,7 +210,7 @@ describe('awafudge formatter', () => {
   });
 
   it('formats nested loops with content', () => {
-    const input = [{ type: TokenType.Loop, content: [
+    const input: Token[] = [{ type: TokenType.Loop, content: [
       { type: TokenType.RightShift, count: 1 },
       { type: TokenType.Loop, content: [
         { type: TokenType.RightShift, count: 1 },
@@ -225,7 +226,7 @@ describe('awafudge formatter', () => {
   });
 
   it('formats immediate nested loops with content', () => {
-    const input = [{ type: TokenType.Loop, content: [
+    const input: Token[] = [{ type: TokenType.Loop, content: [
       { type: TokenType.Loop, content: [
         { type: TokenType.RightShift, count: 1 },
         { type: TokenType.Increment, count: 1 },

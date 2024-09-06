@@ -1,167 +1,174 @@
-const { parse } = require('../../src/parsers/brainfuck');
-const { TokenType } = require('../../src/token-types');
-const assert = require('node:assert').strict;
+import { BrainfuckParser } from '../../src/parsers/brainfuck';
+import { Token } from '../../src/tokens';
+import { TokenType } from '../../src/token-types';
+import { strict as assert } from 'node:assert';
 
 describe('brainfuck parser', () => {
+  let parser: BrainfuckParser;
+
+  beforeEach(() => {
+    parser = new BrainfuckParser();
+  });
+
   it('parses the empty string', () => {
     const input = '';
-    const expected = [];
+    const expected: Token[] = [];
 
-    const actual = parse(input);
+    const actual = parser.parse(input);
 
     assert.deepStrictEqual(actual, expected);
   });
 
   it('parses a single right shift instruction', () => {
     const input = '>';
-    const expected = [
+    const expected: Token[] = [
       { type: TokenType.RightShift, count: 1 },
     ];
 
-    const actual = parse(input);
+    const actual = parser.parse(input);
 
     assert.deepStrictEqual(actual, expected);
   });
 
   it('parses multiple right shift instructions', () => {
     const input = '>>>';
-    const expected = [
+    const expected: Token[] = [
       { type: TokenType.RightShift, count: 3 },
     ];
 
-    const actual = parse(input);
+    const actual = parser.parse(input);
 
     assert.deepStrictEqual(actual, expected);
   });
 
   it('parses a single left shift instruction', () => {
     const input = '<';
-    const expected = [
+    const expected: Token[] = [
       { type: TokenType.LeftShift, count: 1 },
     ];
 
-    const actual = parse(input);
+    const actual = parser.parse(input);
 
     assert.deepStrictEqual(actual, expected);
   });
 
   it('parses multiple left shift instructions', () => {
     const input = '<<<';
-    const expected = [
+    const expected: Token[] = [
       { type: TokenType.LeftShift, count: 3 },
     ];
 
-    const actual = parse(input);
+    const actual = parser.parse(input);
 
     assert.deepStrictEqual(actual, expected);
   });
 
   it('parses a single increment instruction', () => {
     const input = '+';
-    const expected = [
+    const expected: Token[] = [
       { type: TokenType.Increment, count: 1 },
     ];
 
-    const actual = parse(input);
+    const actual = parser.parse(input);
 
     assert.deepStrictEqual(actual, expected);
   });
 
   it('parses multiple increment instructions', () => {
     const input = '+++';
-    const expected = [
+    const expected: Token[] = [
       { type: TokenType.Increment, count: 3 },
     ];
 
-    const actual = parse(input);
+    const actual = parser.parse(input);
 
     assert.deepStrictEqual(actual, expected);
   });
 
   it('parses a single decrement instruction', () => {
     const input = '-';
-    const expected = [
+    const expected: Token[] = [
       { type: TokenType.Decrement, count: 1 },
     ];
 
-    const actual = parse(input);
+    const actual = parser.parse(input);
 
     assert.deepStrictEqual(actual, expected);
   });
 
   it('parses multiple decrement instructions', () => {
     const input = '---';
-    const expected = [
+    const expected: Token[] = [
       { type: TokenType.Decrement, count: 3 },
     ];
 
-    const actual = parse(input);
+    const actual = parser.parse(input);
 
     assert.deepStrictEqual(actual, expected);
   });
 
   it('parses a single write instruction', () => {
     const input = '.';
-    const expected = [
+    const expected: Token[] = [
       { type: TokenType.Write },
     ];
 
-    const actual = parse(input);
+    const actual = parser.parse(input);
 
     assert.deepStrictEqual(actual, expected);
   });
 
   it('parses multiple write instructions', () => {
     const input = '...';
-    const expected = [
+    const expected: Token[] = [
       { type: TokenType.Write },
       { type: TokenType.Write },
       { type: TokenType.Write },
     ];
 
-    const actual = parse(input);
+    const actual = parser.parse(input);
 
     assert.deepStrictEqual(actual, expected);
   });
 
   it('parses a single read instruction', () => {
     const input = ',';
-    const expected = [
+    const expected: Token[] = [
       { type: TokenType.Read },
     ];
 
-    const actual = parse(input);
+    const actual = parser.parse(input);
 
     assert.deepStrictEqual(actual, expected);
   });
 
   it('parses multiple read instructions', () => {
     const input = ',,,';
-    const expected = [
+    const expected: Token[] = [
       { type: TokenType.Read },
       { type: TokenType.Read },
       { type: TokenType.Read },
     ];
 
-    const actual = parse(input);
+    const actual = parser.parse(input);
 
     assert.deepStrictEqual(actual, expected);
   });
 
   it('parses a single empty loop instruction', () => {
     const input = '[]';
-    const expected = [
+    const expected: Token[] = [
       { type: TokenType.Loop, content: [] },
     ];
 
-    const actual = parse(input);
+    const actual = parser.parse(input);
 
     assert.deepStrictEqual(actual, expected);
   });
 
   it('parses nested loop instructions', () => {
     const input = '[[[]]]';
-    const expected = [
+    const expected: Token[] = [
       { type: TokenType.Loop, content: [
         { type: TokenType.Loop, content: [
           { type: TokenType.Loop, content: [] },
@@ -169,14 +176,14 @@ describe('brainfuck parser', () => {
       ] },
     ];
 
-    const actual = parse(input);
+    const actual = parser.parse(input);
 
     assert.deepStrictEqual(actual, expected);
   });
 
   it('parses loop instructions with content', () => {
     const input = '[><+-.,[]]';
-    const expected = [
+    const expected: Token[] = [
       { type: TokenType.Loop, content: [
         { type: TokenType.RightShift, count: 1 },
         { type: TokenType.LeftShift, count: 1 },
@@ -188,7 +195,7 @@ describe('brainfuck parser', () => {
       ] },
     ];
 
-    const actual = parse(input);
+    const actual = parser.parse(input);
 
     assert.deepStrictEqual(actual, expected);
   });
@@ -196,7 +203,7 @@ describe('brainfuck parser', () => {
   it('throws on incomplete loop', () => {
     const input = '[';
 
-    const actual = () => parse(input);
+    const actual = () => parser.parse(input);
 
     assert.throws(actual, Error);
   });
@@ -204,19 +211,19 @@ describe('brainfuck parser', () => {
   it('throws on stray loop end', () => {
     const input = ']';
 
-    const actual = () => parse(input);
+    const actual = () => parser.parse(input);
 
     assert.throws(actual, Error);
   });
 
   it('parses adjacent word instructions of the same type as separate tokens', () => {
     const input = '++ ++';
-    const expected = [
+    const expected: Token[] = [
       { type: TokenType.Increment, count: 2 },
       { type: TokenType.Increment, count: 2 },
     ];
 
-    const actual = parse(input);
+    const actual = parser.parse(input);
 
     assert.deepStrictEqual(actual, expected);
   });
@@ -227,36 +234,36 @@ describe('brainfuck parser', () => {
 
     it('parses +-', () => {
       const input = '+-';
-      const expected = [
+      const expected: Token[] = [
         { type: TokenType.Increment, count: 1 },
         { type: TokenType.Decrement, count: 1 },
       ];
 
-      const actual = parse(input);
+      const actual = parser.parse(input);
 
       assert.deepStrictEqual(actual, expected);
     });
 
     it('parses +<', () => {
       const input = '+<';
-      const expected = [
+      const expected: Token[] = [
         { type: TokenType.Increment, count: 1 },
         { type: TokenType.LeftShift, count: 1 },
       ];
 
-      const actual = parse(input);
+      const actual = parser.parse(input);
 
       assert.deepStrictEqual(actual, expected);
     });
 
     it('parses -<', () => {
       const input = '-<';
-      const expected = [
+      const expected: Token[] = [
         { type: TokenType.Decrement, count: 1 },
         { type: TokenType.LeftShift, count: 1 },
       ];
 
-      const actual = parse(input);
+      const actual = parser.parse(input);
 
       assert.deepStrictEqual(actual, expected);
     });
@@ -264,9 +271,9 @@ describe('brainfuck parser', () => {
 
   it('ignores non-instruction characters', () => {
     const input = '`1234567890=qwertyuiop\\asdfghjkl;\'zxcvbnm/ \n~!@#$%^&*()_QWERTYUIOP{}|ASDFGHJKL:"ZXCVBNM?';
-    const expected = [];
+    const expected: Token[] = [];
 
-    const actual = parse(input);
+    const actual = parser.parse(input);
 
     assert.deepStrictEqual(actual, expected);
   });
@@ -308,7 +315,7 @@ describe('brainfuck parser', () => {
 32 >>+.                    Add 1 to Cell #5 gives us an exclamation point
 33 >++.                    And finally a newline from Cell #6
 `;
-    const expected = [
+    const expected: Token[] = [
       { type: TokenType.Increment, count: 5 },
       { type: TokenType.Increment, count: 3 },
       { type: TokenType.Loop,
@@ -380,7 +387,7 @@ describe('brainfuck parser', () => {
       { type: TokenType.Write }
     ]
 
-    const actual = parse(input);
+    const actual = parser.parse(input);
 
     assert.deepStrictEqual(actual, expected);
   });

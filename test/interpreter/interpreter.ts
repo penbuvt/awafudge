@@ -1,17 +1,18 @@
-const { Interpreter } = require('../../src/interpreter/interpreter');
-const { TokenType } = require('../../src/token-types');
-const assert = require('node:assert').strict;
+import { Interpreter } from '../../src/interpreter/interpreter';
+import { Token } from '../../src/tokens';
+import { TokenType } from '../../src/token-types';
+import { strict as assert } from 'node:assert';
 
 describe('interpreter', () => {
   describe('run', () => {
-    let interpreter;
+    let interpreter: Interpreter;
 
     beforeEach(() => {
       interpreter = new Interpreter();
     });
 
     it('runs the empty program', () => {
-      const input = [];
+      const input: Token[] = [];
 
       const runner = interpreter.run(input);
       const result = runner.next();
@@ -20,7 +21,7 @@ describe('interpreter', () => {
     });
 
     it('runs an empty right shift instruction', () => {
-      const input = [
+      const input: Token[] = [
         { type: TokenType.RightShift, count: 0 },
       ];
 
@@ -33,7 +34,7 @@ describe('interpreter', () => {
     });
 
     it('runs a single right shift instruction', () => {
-      const input = [
+      const input: Token[] = [
         { type: TokenType.RightShift, count: 1 },
       ];
 
@@ -46,7 +47,7 @@ describe('interpreter', () => {
     });
 
     it('runs multiple right shift instructions', () => {
-      const input = [
+      const input: Token[] = [
         { type: TokenType.RightShift, count: 3 },
       ];
 
@@ -59,7 +60,7 @@ describe('interpreter', () => {
     });
 
     it('runs an empty increment instruction', () => {
-      const input = [
+      const input: Token[] = [
         { type: TokenType.Increment, count: 0 },
       ];
 
@@ -70,7 +71,7 @@ describe('interpreter', () => {
       assert.strictEqual(interpreter.state[0], 0);
     });
     it('runs a single increment instruction', () => {
-      const input = [
+      const input: Token[] = [
         { type: TokenType.Increment, count: 1 },
       ];
 
@@ -82,7 +83,7 @@ describe('interpreter', () => {
     });
 
     it('runs multiple increment instructions', () => {
-      const input = [
+      const input: Token[] = [
         { type: TokenType.Increment, count: 3 },
       ];
 
@@ -94,7 +95,7 @@ describe('interpreter', () => {
     });
 
     it('overflows the cell when incrementing past the max', () => {
-      const input = [
+      const input: Token[] = [
         { type: TokenType.Increment, count: 1 },
       ];
       interpreter.state[0] = 255;
@@ -107,7 +108,7 @@ describe('interpreter', () => {
     });
 
     it('runs an empty decrement instruction', () => {
-      const input = [
+      const input: Token[] = [
         { type: TokenType.Decrement, count: 0 },
       ];
       interpreter.state[0] = 50;
@@ -120,7 +121,7 @@ describe('interpreter', () => {
     });
 
     it('runs a single decrement instruction', () => {
-      const input = [
+      const input: Token[] = [
         { type: TokenType.Decrement, count: 1 },
       ];
       interpreter.state[0] = 50;
@@ -133,7 +134,7 @@ describe('interpreter', () => {
     });
 
     it('runs multiple decrement instructions', () => {
-      const input = [
+      const input: Token[] = [
         { type: TokenType.Decrement, count: 3 },
       ];
       interpreter.state[0] = 50;
@@ -146,7 +147,7 @@ describe('interpreter', () => {
     });
 
     it('underflows the cell when decrementing from 0', () => {
-      const input = [
+      const input: Token[] = [
         { type: TokenType.Decrement, count: 1 },
       ];
       interpreter.state[0] = 0;
