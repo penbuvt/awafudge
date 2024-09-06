@@ -1,9 +1,17 @@
+import { Token } from '../tokens';
 import { TokenType } from '../token-types';
 
 const DELETE_PREV_WHITESPACE = '__DELWS__';
 
-function format(tokens, { processDirectives = true } = {}) {
-  const formatted = tokens.map((token) => {
+export interface FormatOptions {
+  processDirectives?: boolean;
+}
+
+export function format(
+  tokens: Token[],
+  { processDirectives = true }: FormatOptions = {}
+): string {
+  const formatted = tokens.map((token): string => {
     switch (token.type) {
       case TokenType.RightShift:
         return formatRepeatableWa('a', token.count, '~');
@@ -32,11 +40,12 @@ function format(tokens, { processDirectives = true } = {}) {
     : formatted;
 }
 
-function formatRepeatableWa(prefix, count, suffix) {
+function formatRepeatableWa(
+  prefix: string,
+  count: number,
+  suffix: string
+): string {
   return prefix + 'wa'.repeat(count) + suffix;
 }
 
 export default format;
-export {
-  format,
-};
