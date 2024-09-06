@@ -1,14 +1,20 @@
-import { parse } from '../../src/parsers/brainfuck';
+import { BrainfuckParser } from '../../src/parsers/brainfuck';
 import { Token } from '../../src/tokens';
 import { TokenType } from '../../src/token-types';
 import { strict as assert } from 'node:assert';
 
 describe('brainfuck parser', () => {
+  let parser: BrainfuckParser;
+
+  beforeEach(() => {
+    parser = new BrainfuckParser();
+  });
+
   it('parses the empty string', () => {
     const input = '';
     const expected: Token[] = [];
 
-    const actual = parse(input);
+    const actual = parser.parse(input);
 
     assert.deepStrictEqual(actual, expected);
   });
@@ -19,7 +25,7 @@ describe('brainfuck parser', () => {
       { type: TokenType.RightShift, count: 1 },
     ];
 
-    const actual = parse(input);
+    const actual = parser.parse(input);
 
     assert.deepStrictEqual(actual, expected);
   });
@@ -30,7 +36,7 @@ describe('brainfuck parser', () => {
       { type: TokenType.RightShift, count: 3 },
     ];
 
-    const actual = parse(input);
+    const actual = parser.parse(input);
 
     assert.deepStrictEqual(actual, expected);
   });
@@ -41,7 +47,7 @@ describe('brainfuck parser', () => {
       { type: TokenType.LeftShift, count: 1 },
     ];
 
-    const actual = parse(input);
+    const actual = parser.parse(input);
 
     assert.deepStrictEqual(actual, expected);
   });
@@ -52,7 +58,7 @@ describe('brainfuck parser', () => {
       { type: TokenType.LeftShift, count: 3 },
     ];
 
-    const actual = parse(input);
+    const actual = parser.parse(input);
 
     assert.deepStrictEqual(actual, expected);
   });
@@ -63,7 +69,7 @@ describe('brainfuck parser', () => {
       { type: TokenType.Increment, count: 1 },
     ];
 
-    const actual = parse(input);
+    const actual = parser.parse(input);
 
     assert.deepStrictEqual(actual, expected);
   });
@@ -74,7 +80,7 @@ describe('brainfuck parser', () => {
       { type: TokenType.Increment, count: 3 },
     ];
 
-    const actual = parse(input);
+    const actual = parser.parse(input);
 
     assert.deepStrictEqual(actual, expected);
   });
@@ -85,7 +91,7 @@ describe('brainfuck parser', () => {
       { type: TokenType.Decrement, count: 1 },
     ];
 
-    const actual = parse(input);
+    const actual = parser.parse(input);
 
     assert.deepStrictEqual(actual, expected);
   });
@@ -96,7 +102,7 @@ describe('brainfuck parser', () => {
       { type: TokenType.Decrement, count: 3 },
     ];
 
-    const actual = parse(input);
+    const actual = parser.parse(input);
 
     assert.deepStrictEqual(actual, expected);
   });
@@ -107,7 +113,7 @@ describe('brainfuck parser', () => {
       { type: TokenType.Write },
     ];
 
-    const actual = parse(input);
+    const actual = parser.parse(input);
 
     assert.deepStrictEqual(actual, expected);
   });
@@ -120,7 +126,7 @@ describe('brainfuck parser', () => {
       { type: TokenType.Write },
     ];
 
-    const actual = parse(input);
+    const actual = parser.parse(input);
 
     assert.deepStrictEqual(actual, expected);
   });
@@ -131,7 +137,7 @@ describe('brainfuck parser', () => {
       { type: TokenType.Read },
     ];
 
-    const actual = parse(input);
+    const actual = parser.parse(input);
 
     assert.deepStrictEqual(actual, expected);
   });
@@ -144,7 +150,7 @@ describe('brainfuck parser', () => {
       { type: TokenType.Read },
     ];
 
-    const actual = parse(input);
+    const actual = parser.parse(input);
 
     assert.deepStrictEqual(actual, expected);
   });
@@ -155,7 +161,7 @@ describe('brainfuck parser', () => {
       { type: TokenType.Loop, content: [] },
     ];
 
-    const actual = parse(input);
+    const actual = parser.parse(input);
 
     assert.deepStrictEqual(actual, expected);
   });
@@ -170,7 +176,7 @@ describe('brainfuck parser', () => {
       ] },
     ];
 
-    const actual = parse(input);
+    const actual = parser.parse(input);
 
     assert.deepStrictEqual(actual, expected);
   });
@@ -189,7 +195,7 @@ describe('brainfuck parser', () => {
       ] },
     ];
 
-    const actual = parse(input);
+    const actual = parser.parse(input);
 
     assert.deepStrictEqual(actual, expected);
   });
@@ -197,7 +203,7 @@ describe('brainfuck parser', () => {
   it('throws on incomplete loop', () => {
     const input = '[';
 
-    const actual = () => parse(input);
+    const actual = () => parser.parse(input);
 
     assert.throws(actual, Error);
   });
@@ -205,7 +211,7 @@ describe('brainfuck parser', () => {
   it('throws on stray loop end', () => {
     const input = ']';
 
-    const actual = () => parse(input);
+    const actual = () => parser.parse(input);
 
     assert.throws(actual, Error);
   });
@@ -217,7 +223,7 @@ describe('brainfuck parser', () => {
       { type: TokenType.Increment, count: 2 },
     ];
 
-    const actual = parse(input);
+    const actual = parser.parse(input);
 
     assert.deepStrictEqual(actual, expected);
   });
@@ -233,7 +239,7 @@ describe('brainfuck parser', () => {
         { type: TokenType.Decrement, count: 1 },
       ];
 
-      const actual = parse(input);
+      const actual = parser.parse(input);
 
       assert.deepStrictEqual(actual, expected);
     });
@@ -245,7 +251,7 @@ describe('brainfuck parser', () => {
         { type: TokenType.LeftShift, count: 1 },
       ];
 
-      const actual = parse(input);
+      const actual = parser.parse(input);
 
       assert.deepStrictEqual(actual, expected);
     });
@@ -257,7 +263,7 @@ describe('brainfuck parser', () => {
         { type: TokenType.LeftShift, count: 1 },
       ];
 
-      const actual = parse(input);
+      const actual = parser.parse(input);
 
       assert.deepStrictEqual(actual, expected);
     });
@@ -267,7 +273,7 @@ describe('brainfuck parser', () => {
     const input = '`1234567890=qwertyuiop\\asdfghjkl;\'zxcvbnm/ \n~!@#$%^&*()_QWERTYUIOP{}|ASDFGHJKL:"ZXCVBNM?';
     const expected: Token[] = [];
 
-    const actual = parse(input);
+    const actual = parser.parse(input);
 
     assert.deepStrictEqual(actual, expected);
   });
@@ -381,7 +387,7 @@ describe('brainfuck parser', () => {
       { type: TokenType.Write }
     ]
 
-    const actual = parse(input);
+    const actual = parser.parse(input);
 
     assert.deepStrictEqual(actual, expected);
   });

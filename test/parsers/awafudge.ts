@@ -1,14 +1,20 @@
-import { parse } from '../../src/parsers/awafudge';
+import { AwafudgeParser } from '../../src/parsers/awafudge';
 import { Token } from '../../src/tokens';
 import { TokenType } from '../../src/token-types';
 import { strict as assert } from 'node:assert';
 
 describe('awafudge parser', () => {
+  let parser: AwafudgeParser;
+
+  beforeEach(() => {
+    parser = new AwafudgeParser();
+  });
+
   it('parses the empty string', () => {
     const input = '';
     const expected: Token[] = [];
 
-    const actual = parse(input);
+    const actual = parser.parse(input);
 
     assert.deepStrictEqual(actual, expected);
   });
@@ -19,7 +25,7 @@ describe('awafudge parser', () => {
       { type: TokenType.RightShift, count: 0 },
     ];
 
-    const actual = parse(input);
+    const actual = parser.parse(input);
 
     assert.deepStrictEqual(actual, expected);
   });
@@ -30,7 +36,7 @@ describe('awafudge parser', () => {
       { type: TokenType.RightShift, count: 1 },
     ];
 
-    const actual = parse(input);
+    const actual = parser.parse(input);
 
     assert.deepStrictEqual(actual, expected);
   });
@@ -41,7 +47,7 @@ describe('awafudge parser', () => {
       { type: TokenType.RightShift, count: 3 },
     ];
 
-    const actual = parse(input);
+    const actual = parser.parse(input);
 
     assert.deepStrictEqual(actual, expected);
   });
@@ -52,7 +58,7 @@ describe('awafudge parser', () => {
       { type: TokenType.LeftShift, count: 0 },
     ];
 
-    const actual = parse(input);
+    const actual = parser.parse(input);
 
     assert.deepStrictEqual(actual, expected);
   });
@@ -63,7 +69,7 @@ describe('awafudge parser', () => {
       { type: TokenType.LeftShift, count: 1 },
     ];
 
-    const actual = parse(input);
+    const actual = parser.parse(input);
 
     assert.deepStrictEqual(actual, expected);
   });
@@ -74,7 +80,7 @@ describe('awafudge parser', () => {
       { type: TokenType.LeftShift, count: 3 },
     ];
 
-    const actual = parse(input);
+    const actual = parser.parse(input);
 
     assert.deepStrictEqual(actual, expected);
   });
@@ -85,7 +91,7 @@ describe('awafudge parser', () => {
       { type: TokenType.Increment, count: 0 },
     ];
 
-    const actual = parse(input);
+    const actual = parser.parse(input);
 
     assert.deepStrictEqual(actual, expected);
   });
@@ -96,7 +102,7 @@ describe('awafudge parser', () => {
       { type: TokenType.Increment, count: 1 },
     ];
 
-    const actual = parse(input);
+    const actual = parser.parse(input);
 
     assert.deepStrictEqual(actual, expected);
   });
@@ -107,7 +113,7 @@ describe('awafudge parser', () => {
       { type: TokenType.Increment, count: 3 },
     ];
 
-    const actual = parse(input);
+    const actual = parser.parse(input);
 
     assert.deepStrictEqual(actual, expected);
   });
@@ -118,7 +124,7 @@ describe('awafudge parser', () => {
       { type: TokenType.Decrement, count: 1 },
     ];
 
-    const actual = parse(input);
+    const actual = parser.parse(input);
 
     assert.deepStrictEqual(actual, expected);
   });
@@ -129,7 +135,7 @@ describe('awafudge parser', () => {
       { type: TokenType.Decrement, count: 3 },
     ];
 
-    const actual = parse(input);
+    const actual = parser.parse(input);
 
     assert.deepStrictEqual(actual, expected);
   });
@@ -140,7 +146,7 @@ describe('awafudge parser', () => {
       { type: TokenType.Write },
     ];
 
-    const actual = parse(input);
+    const actual = parser.parse(input);
 
     assert.deepStrictEqual(actual, expected);
   });
@@ -153,7 +159,7 @@ describe('awafudge parser', () => {
       { type: TokenType.Write },
     ];
 
-    const actual = parse(input);
+    const actual = parser.parse(input);
 
     assert.deepStrictEqual(actual, expected);
   });
@@ -164,7 +170,7 @@ describe('awafudge parser', () => {
       { type: TokenType.Read },
     ];
 
-    const actual = parse(input);
+    const actual = parser.parse(input);
 
     assert.deepStrictEqual(actual, expected);
   });
@@ -177,7 +183,7 @@ describe('awafudge parser', () => {
       { type: TokenType.Read },
     ];
 
-    const actual = parse(input);
+    const actual = parser.parse(input);
 
     assert.deepStrictEqual(actual, expected);
   });
@@ -188,7 +194,7 @@ describe('awafudge parser', () => {
       { type: TokenType.Loop, content: [] },
     ];
 
-    const actual = parse(input);
+    const actual = parser.parse(input);
 
     assert.deepStrictEqual(actual, expected);
   });
@@ -203,7 +209,7 @@ describe('awafudge parser', () => {
       ] },
     ];
 
-    const actual = parse(input);
+    const actual = parser.parse(input);
 
     assert.deepStrictEqual(actual, expected);
   });
@@ -222,7 +228,7 @@ describe('awafudge parser', () => {
       ] },
     ];
 
-    const actual = parse(input);
+    const actual = parser.parse(input);
 
     assert.deepStrictEqual(actual, expected);
   });
@@ -230,7 +236,7 @@ describe('awafudge parser', () => {
   it('throws on incomplete loop', () => {
     const input = '?';
 
-    const actual = () => parse(input);
+    const actual = () => parser.parse(input);
 
     assert.throws(actual, Error);
   });
@@ -238,7 +244,7 @@ describe('awafudge parser', () => {
   it('throws on stray loop end', () => {
     const input = '!';
 
-    const actual = () => parse(input);
+    const actual = () => parser.parse(input);
 
     assert.throws(actual, Error);
   });
@@ -250,7 +256,7 @@ describe('awafudge parser', () => {
       { type: TokenType.Increment, count: 2 },
     ];
 
-    const actual = parse(input);
+    const actual = parser.parse(input);
 
     assert.deepStrictEqual(actual, expected);
   });
@@ -262,7 +268,7 @@ describe('awafudge parser', () => {
       { type: TokenType.Decrement, count: 1 },
     ];
 
-    const actual = parse(input);
+    const actual = parser.parse(input);
 
     assert.deepStrictEqual(actual, expected);
   });
@@ -275,7 +281,7 @@ describe('awafudge parser', () => {
         { type: TokenType.Increment, count: 1 },
       ];
 
-      const actual = parse(input);
+      const actual = parser.parse(input);
 
       assert.deepStrictEqual(actual, expected);
     });
@@ -287,7 +293,7 @@ describe('awafudge parser', () => {
         { type: TokenType.RightShift, count: 1 },
       ];
 
-      const actual = parse(input);
+      const actual = parser.parse(input);
 
       assert.deepStrictEqual(actual, expected);
     });
@@ -302,7 +308,7 @@ describe('awafudge parser', () => {
         { type: TokenType.Decrement, count: 1 },
       ];
 
-      const actual = parse(input);
+      const actual = parser.parse(input);
 
       assert.deepStrictEqual(actual, expected);
     });
@@ -321,7 +327,7 @@ describe('awafudge parser', () => {
         { type: TokenType.Decrement, count: 1 },
       ];
 
-      const actual = parse(input);
+      const actual = parser.parse(input);
 
       assert.deepStrictEqual(actual, expected);
     });
@@ -331,7 +337,7 @@ describe('awafudge parser', () => {
     const input = '`1234567890=qertyuiop\\sdfghjkl;\'zxcvbnm/ \n@#$%^&*()_QWERTYUIOP{}|ASDFGHJKL:"ZXCVBNM';
     const expected: Token[] = [];
 
-    const actual = parse(input);
+    const actual = parser.parse(input);
 
     assert.deepStrictEqual(actual, expected);
   });
@@ -411,7 +417,7 @@ describe('awafudge parser', () => {
       { type: TokenType.Write }
     ]
 
-    const actual = parse(input);
+    const actual = parser.parse(input);
 
     assert.deepStrictEqual(actual, expected);
   });
