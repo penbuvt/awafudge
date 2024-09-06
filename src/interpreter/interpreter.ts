@@ -1,14 +1,18 @@
-const { TokenType } = require('../token-types');
+import { Token } from '../tokens';
+import { TokenType } from '../token-types';
 
 const CELL_SIZE = 8;
 
 export class Interpreter {
+  state: number[];
+  pointer: number;
+
   constructor() {
     this.state = [0];
     this.pointer = 0;
   }
 
-  *run(program) {
+  *run(program: Token[]) {
     for (let token of program) {
       switch (token.type) {
         case TokenType.Increment:
