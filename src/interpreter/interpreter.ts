@@ -2,7 +2,7 @@ const { TokenType } = require('../token-types');
 
 const CELL_SIZE = 8;
 
-class Interpreter {
+export class Interpreter {
   constructor() {
     this.state = [0];
     this.pointer = 0;
@@ -36,6 +36,4 @@ class Interpreter {
   }
 }
 
-module.exports ={
-  Interpreter,
-};
+export default Interpreter;
