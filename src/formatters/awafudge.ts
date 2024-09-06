@@ -1,4 +1,4 @@
-const { TokenType } = require('../token-types');
+import { TokenType } from '../token-types';
 
 const DELETE_PREV_WHITESPACE = '__DELWS__';
 
@@ -36,8 +36,7 @@ function formatRepeatableWa(prefix, count, suffix) {
   return prefix + 'wa'.repeat(count) + suffix;
 }
 
-module.exports = {
-  default: format,
+export default format;
+export {
   format,
 };
-
