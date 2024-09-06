@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha --recursive",
+    "build": "tsc",
     "build:parser:brainfuck": "jison -o src/parsers/brainfuck.js src/parsers/brainfuck.jison",
     "build:parser:awafudge": "jison -o src/parsers/awafudge.js src/parsers/awafudge.jison"
   },
