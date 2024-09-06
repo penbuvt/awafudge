@@ -1,6 +1,6 @@
 const { TokenType } = require('../token-types');
 
-function format(tokens) {
+export function format(tokens) {
   return tokens.map((token) => {
     switch (token.type) {
       case TokenType.RightShift:
@@ -23,7 +23,4 @@ function format(tokens) {
   }).join('');
 }
 
-module.exports = {
-  default: format,
-  format,
-};
+export default format;
