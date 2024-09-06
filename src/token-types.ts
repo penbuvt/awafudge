@@ -8,6 +8,5 @@ const TokenType = {
   Loop: 'LOOP',
 };
 
-module.exports = {
-  TokenType,
-};
+export default TokenType;
+export { TokenType };
