@@ -1,7 +1,8 @@
-const { TokenType } = require('../token-types');
+import { Token } from '../tokens';
+import { TokenType } from '../token-types';
 
-export function format(tokens) {
-  return tokens.map((token) => {
+export function format(tokens: Token[]): string {
+  return tokens.map((token): string => {
     switch (token.type) {
       case TokenType.RightShift:
       case TokenType.LeftShift:
