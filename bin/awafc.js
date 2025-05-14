@@ -14,8 +14,9 @@ const options = nopt({
 });
 
 const outFile = options.output;
+const inFile = options.argv.remain[0] || 0;
 
-const input = readFileSync(0).toString();
+const input = readFileSync(inFile).toString();
 const parser = new AwafudgeParser();
 const ast = parser.parse(input);
 const formatted = BrainfuckFormatter.format(ast);
