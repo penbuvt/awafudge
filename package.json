@@ -10,6 +10,9 @@
     "build:parser:brainfuck": "ts-jison -t typescript -n \"Brainfuck\" -o src/parsers/brainfuck.ts src/parsers/brainfuck.jison",
     "build:parser:awafudge": "ts-jison -t typescript -n \"Awafudge\" -o src/parsers/awafudge.ts src/parsers/awafudge.jison"
   },
+  "bin": {
+    "awafc": "bin/awafc.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/penbuvt/awafudge.git"
