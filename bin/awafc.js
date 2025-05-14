@@ -13,16 +13,12 @@ const options = nopt({
   'o': ['--output'],
 });
 
-const outFile = options.output;
-const inFile = options.argv.remain[0] || 0;
+
+const inFile = options.argv.remain[0] || 0; // default to stdin if not given
+const outFile = options.output || 1; // default to stdout if not given
 
 const input = readFileSync(inFile).toString();
 const parser = new AwafudgeParser();
 const ast = parser.parse(input);
 const formatted = BrainfuckFormatter.format(ast);
-
-if (outFile) {
-  writeFileSync(outFile, formatted + EOL);
-} else {
-  stdout.write(formatted + EOL);
-}
+writeFileSync(outFile, formatted + EOL);
