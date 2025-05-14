@@ -29,5 +29,8 @@
     "mocha": "^10.2.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.4"
+  },
+  "dependencies": {
+    "nopt": "^8.1.0"
   }
 }
