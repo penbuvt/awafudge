@@ -2,7 +2,7 @@
   "name": "awafudge",
   "version": "0.1.0",
   "description": "awawawa",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "test": "mocha --require ts-node/register --extension ts --recursive",
     "prepack": "tsc",
