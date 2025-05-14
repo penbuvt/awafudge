@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha --require ts-node/register --extension ts --recursive",
+    "prepack": "tsc",
     "build": "tsc",
     "build:parser:brainfuck": "ts-jison -t typescript -n \"Brainfuck\" -o src/parsers/brainfuck.ts src/parsers/brainfuck.jison",
     "build:parser:awafudge": "ts-jison -t typescript -n \"Awafudge\" -o src/parsers/awafudge.ts src/parsers/awafudge.jison"
