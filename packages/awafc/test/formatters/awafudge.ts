@@ -131,9 +131,37 @@ describe('awafudge formatter', () => {
     assert.strictEqual(actual, expected);
   });
 
+  it('formats writes without preceding spaces', () => {
+    const input: Token[] = [
+      { type: TokenType.Write },
+      { type: TokenType.Write },
+      { type: TokenType.Increment, count: 1 },
+      { type: TokenType.Write },
+    ];
+    const expected = '.. awa.';
+
+    const actual = format(input);
+
+    assert.strictEqual(actual, expected);
+  });
+
   it('formats read instructions', () => {
     const input: Token[] = [{ type: TokenType.Read }];
     const expected = ',';
+
+    const actual = format(input);
+
+    assert.strictEqual(actual, expected);
+  });
+
+  it('formats writes without preceding spaces', () => {
+    const input: Token[] = [
+      { type: TokenType.Read },
+      { type: TokenType.Read },
+      { type: TokenType.Increment, count: 1 },
+      { type: TokenType.Read },
+    ];
+    const expected = ',, awa,';
 
     const actual = format(input);
 

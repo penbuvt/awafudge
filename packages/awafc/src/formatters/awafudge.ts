@@ -22,9 +22,9 @@ export function format(
       case TokenType.Decrement:
         return formatRepeatableWa('', token.count, '');
       case TokenType.Write:
-        return '.';
+        return DELETE_PREV_WHITESPACE + '.';
       case TokenType.Read:
-        return ',';
+        return DELETE_PREV_WHITESPACE + ',';
       case TokenType.Loop:
         return !token.content.length
           ? DELETE_PREV_WHITESPACE + '?!'
