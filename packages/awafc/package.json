@@ -1,0 +1,36 @@
+{
+  "name": "awafudge",
+  "version": "0.1.0",
+  "description": "awawawa",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "mocha --require ts-node/register --extension ts --recursive",
+    "prepack": "tsc",
+    "build": "tsc",
+    "build:parser:brainfuck": "ts-jison -t typescript -n \"Brainfuck\" -o src/parsers/brainfuck.ts src/parsers/brainfuck.jison",
+    "build:parser:awafudge": "ts-jison -t typescript -n \"Awafudge\" -o src/parsers/awafudge.ts src/parsers/awafudge.jison"
+  },
+  "bin": {
+    "awafc": "bin/awafc.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/penbuvt/awafudge.git"
+  },
+  "author": "PenbuVT",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/penbuvt/awafudge/issues"
+  },
+  "homepage": "https://github.com/penbuvt/awafudge#readme",
+  "devDependencies": {
+    "@ts-jison/parser-generator": "^0.4.1-alpha.2",
+    "@types/mocha": "^10.0.7",
+    "mocha": "^10.2.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.4"
+  },
+  "dependencies": {
+    "nopt": "^8.1.0"
+  }
+}
