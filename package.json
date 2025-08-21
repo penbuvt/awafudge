@@ -1,0 +1,4 @@
+{
+  "name": "awafudge",
+  "workspaces": ["packages/awafc"]
+}
