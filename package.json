@@ -1,4 +1,7 @@
 {
   "name": "awafudge",
-  "workspaces": ["packages/awafc"]
+  "workspaces": [
+    "packages/awafc",
+    "packages/awafui"
+  ]
 }
