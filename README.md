@@ -7,7 +7,7 @@ A brainfuck-based esoteric programming language inspired by [Phase Connect][] ta
 
 ## Original proposal
 
-The [original proposal](https://discord.com/channels/857035276538609674/1108627547287199754/1148265859446493204) for the modern iteration of the language was sent by Penbu in the Phase Connect Discord server on September 4, 2024:
+The [original proposal](https://discord.com/channels/857035276538609674/1108627547287199754/1148265859446493204) for the modern iteration of the language was sent by Penbu in the Phase Connect Discord server on September 4, 2023:
 
 > I thought about it some more and I've come up with something I (mostly) like. It's not a trivial substitution so we'll have to write a dedicated compiler/transpiler for it, but it still maps back to brainfuck pretty easily.
 > 
