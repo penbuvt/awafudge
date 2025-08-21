@@ -9,3 +9,9 @@
 </svelte:head>
 
 {@render children?.()}
+
+<style>
+	:global(body) {
+		background-color: #cce8f6;
+	}
+</style>
