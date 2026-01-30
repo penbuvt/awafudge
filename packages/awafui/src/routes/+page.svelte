@@ -1,7 +1,24 @@
-<script lang="typescript">
+<script lang="ts">
+	import TabBar, { type TabDescriptor } from "$lib/TabBar.svelte";
 	import Converter from "$lib/pages/Converter.svelte";
+
+	let activeTabId = $state('convert');
+
+	const tabs: TabDescriptor[] = [
+		{
+			id: 'convert',
+			title: 'Convert',
+		}
+	];
+
+	function onTabChange(tabId: string): void {
+		activeTabId = tabId;
+	}
 </script>
 
 <h1>awafudge</h1>
 
-<Converter />
+<TabBar {tabs} {activeTabId} onChange={onTabChange} />
+{#if activeTabId === 'convert'}
+	<Converter />
+{/if}
