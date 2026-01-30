@@ -199,6 +199,17 @@ describe('awafudge parser', () => {
     assert.deepStrictEqual(actual, expected);
   });
 
+  it('parses a single empty loop instruction with whitespace', () => {
+    const input = '? !';
+    const expected: Token[] = [
+      { type: TokenType.Loop, content: [] },
+    ];
+
+    const actual = parser.parse(input);
+
+    assert.deepStrictEqual(actual, expected);
+  });
+
   it('parses nested loop instructions', () => {
     const input = '???!!!';
     const expected: Token[] = [
@@ -215,7 +226,7 @@ describe('awafudge parser', () => {
   });
 
   it('parses loop instructions with content', () => {
-    const input = '? awa~ wa~ awa wa.,?!!';
+    const input = '? awa~ wa~ awa wa.,?! !';
     const expected: Token[] = [
       { type: TokenType.Loop, content: [
         { type: TokenType.RightShift, count: 1 },

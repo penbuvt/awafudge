@@ -5,9 +5,9 @@ import { JisonParser, JisonParserApi, StateType, SymbolsType, TerminalsType, Pro
  */
 export class AwafudgeParser extends JisonParser implements JisonParserApi {
     $?: any;
-    symbols_: SymbolsType = {"error":2,"program":3,"operations":4,"program_option0":5,"EOF":6,"operation":7,"SPACE":8,"decrements":9,"increments":10,"leftshifts":11,"rightshifts":12,",":13,".":14,"loop":15,"?":16,"!":17,"was":18,"awas":19,"~":20,"was_repetition_plus0":21,"A":22,"WA":23,"$accept":0,"$end":1};
-    terminals_: TerminalsType = {2:"error",6:"EOF",8:"SPACE",13:",",14:".",16:"?",17:"!",20:"~",22:"A",23:"WA"};
-    productions_: ProductionsType = [0,[3,3],[4,0],[4,2],[4,3],[7,1],[7,1],[7,1],[7,1],[7,1],[7,1],[7,1],[15,3],[9,1],[10,1],[11,2],[11,1],[12,2],[18,1],[19,1],[19,2],[5,0],[5,1],[21,1],[21,2]];
+    symbols_: SymbolsType = {"error":2,"program":3,"operations":4,"program_option0":5,"EOF":6,"operation":7,"SPACE":8,"decrements":9,"increments":10,"leftshifts":11,"rightshifts":12,",":13,".":14,"loop":15,"?":16,"loop_option0":17,"!":18,"was":19,"awas":20,"~":21,"was_repetition_plus0":22,"A":23,"WA":24,"$accept":0,"$end":1};
+    terminals_: TerminalsType = {2:"error",6:"EOF",8:"SPACE",13:",",14:".",16:"?",18:"!",21:"~",23:"A",24:"WA"};
+    productions_: ProductionsType = [0,[3,3],[4,0],[4,2],[4,3],[7,1],[7,1],[7,1],[7,1],[7,1],[7,1],[7,1],[15,4],[9,1],[10,1],[11,2],[11,1],[12,2],[19,1],[20,1],[20,2],[5,0],[5,1],[17,0],[17,1],[22,1],[22,2]];
     table: Array<StateType>;
     defaultActions: {[key:number]: any} = {20:[2,1]};
 
@@ -15,9 +15,9 @@ export class AwafudgeParser extends JisonParser implements JisonParserApi {
       super(yy, lexer);
 
       // shorten static method to just `o` for terse STATE_TABLE
-      const $V0=[2,2],$V1=[1,10],$V2=[1,11],$V3=[1,16],$V4=[1,15],$V5=[1,18],$V6=[1,19],$V7=[6,8,13,14,16,17,20,22,23],$V8=[6,8,13,14,16,17,22,23],$V9=[6,8,13,14,16,17,20,22];
+      const $V0=[2,2],$V1=[1,10],$V2=[1,11],$V3=[1,16],$V4=[1,15],$V5=[1,18],$V6=[1,19],$V7=[6,8,13,14,16,18,21,23,24],$V8=[6,8,13,14,16,18,23,24],$V9=[6,8,13,14,16,18,21,23];
       const o = JisonParser.expandParseTable;
-      this.table = [o([6,8,13,14,16,20,22,23],$V0,{3:1,4:2}),{1:[3]},{5:3,6:[2,21],7:4,8:[1,5],9:6,10:7,11:8,12:9,13:$V1,14:$V2,15:12,16:$V3,18:13,19:14,20:$V4,21:17,22:$V5,23:$V6},{6:[1,20]},o($V7,[2,3]),{6:[2,22],7:21,9:6,10:7,11:8,12:9,13:$V1,14:$V2,15:12,16:$V3,18:13,19:14,20:$V4,21:17,22:$V5,23:$V6},o($V7,[2,5]),o($V7,[2,6]),o($V7,[2,7]),o($V7,[2,8]),o($V7,[2,9]),o($V7,[2,10]),o($V7,[2,11]),o($V8,[2,13],{20:[1,22]}),o($V8,[2,14],{20:[1,23]}),o($V7,[2,16]),o([8,13,14,16,17,20,22,23],$V0,{4:24}),o($V9,[2,18],{23:[1,25]}),o($V9,[2,19],{21:17,18:26,23:$V6}),o($V7,[2,23]),{1:[2,1]},o($V7,[2,4]),o($V7,[2,15]),o($V7,[2,17]),{7:4,8:[1,28],9:6,10:7,11:8,12:9,13:$V1,14:$V2,15:12,16:$V3,17:[1,27],18:13,19:14,20:$V4,21:17,22:$V5,23:$V6},o($V7,[2,24]),o($V7,[2,20]),o($V7,[2,12]),{7:21,9:6,10:7,11:8,12:9,13:$V1,14:$V2,15:12,16:$V3,18:13,19:14,20:$V4,21:17,22:$V5,23:$V6}];
+      this.table = [o([6,8,13,14,16,21,23,24],$V0,{3:1,4:2}),{1:[3]},{5:3,6:[2,21],7:4,8:[1,5],9:6,10:7,11:8,12:9,13:$V1,14:$V2,15:12,16:$V3,19:13,20:14,21:$V4,22:17,23:$V5,24:$V6},{6:[1,20]},o($V7,[2,3]),{6:[2,22],7:21,9:6,10:7,11:8,12:9,13:$V1,14:$V2,15:12,16:$V3,19:13,20:14,21:$V4,22:17,23:$V5,24:$V6},o($V7,[2,5]),o($V7,[2,6]),o($V7,[2,7]),o($V7,[2,8]),o($V7,[2,9]),o($V7,[2,10]),o($V7,[2,11]),o($V8,[2,13],{21:[1,22]}),o($V8,[2,14],{21:[1,23]}),o($V7,[2,16]),o([8,13,14,16,18,21,23,24],$V0,{4:24}),o($V9,[2,18],{24:[1,25]}),o($V9,[2,19],{22:17,19:26,24:$V6}),o($V7,[2,25]),{1:[2,1]},o($V7,[2,4]),o($V7,[2,15]),o($V7,[2,17]),{7:4,8:[1,28],9:6,10:7,11:8,12:9,13:$V1,14:$V2,15:12,16:$V3,17:27,18:[2,23],19:13,20:14,21:$V4,22:17,23:$V5,24:$V6},o($V7,[2,26]),o($V7,[2,20]),{18:[1,29]},{7:21,9:6,10:7,11:8,12:9,13:$V1,14:$V2,15:12,16:$V3,18:[2,24],19:13,20:14,21:$V4,22:17,23:$V5,24:$V6},o($V7,[2,12])];
     }
 
     performAction (yytext:string, yyleng:number, yylineno:number, yy:any, yystate:number /* action[1] */, $$:any /* vstack */, _$:any /* lstack */): any {
@@ -46,7 +46,7 @@ case 10:
 this.$ = { type: 'WRITE' };
 break;
 case 12:
-this.$ = { type: 'LOOP', content: $$[$0-1] };
+this.$ = { type: 'LOOP', content: $$[$0-2] };
 break;
 case 13:
 this.$ = { type: 'DECREMENT', count: $$[$0].length };
@@ -66,10 +66,10 @@ break;
 case 19:
 this.$ = '';
 break;
-case 23:
+case 25:
 this.$ = [$$[$0]];
 break;
-case 24:
+case 26:
 $$[$0-1].push($$[$0]);
 break;
         }
@@ -101,9 +101,9 @@ export class AwafudgeLexer extends JisonLexer implements JisonLexerApi {
     performAction (yy:any,yy_:any,$avoiding_name_collisions:any,YY_START:any): any {
           var YYSTATE=YY_START;
         switch($avoiding_name_collisions) {
-    case 0:return 22;
+    case 0:return 23;
       break;
-    case 1:return 23;
+    case 1:return 24;
       break;
     case 2:return 13;
       break;
@@ -111,9 +111,9 @@ export class AwafudgeLexer extends JisonLexer implements JisonLexerApi {
       break;
     case 4:return 16;
       break;
-    case 5:return 17;
+    case 5:return 18;
       break;
-    case 6:return 20;
+    case 6:return 21;
       break;
     case 7:return 8;
       break;

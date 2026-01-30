@@ -36,7 +36,7 @@ operation: decrements {$$ = $1;}
          | loop
          ;
 
-loop: '?' operations '!' {$$ = { type: 'LOOP', content: $2 };};
+loop: '?' operations SPACE? '!' {$$ = { type: 'LOOP', content: $2 };};
 
 decrements: was {$$ = { type: 'DECREMENT', count: $1.length };};
 
