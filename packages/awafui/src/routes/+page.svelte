@@ -1,6 +1,6 @@
 <script lang="ts">
 	import TabBar, { type TabDescriptor } from "$lib/TabBar.svelte";
-	import Converter from "$lib/pages/Converter.svelte";
+	import ConvertPage from "$lib/pages/ConvertPage.svelte";
 
 	let activeTabId = $state('convert');
 
@@ -20,5 +20,5 @@
 
 <TabBar {tabs} {activeTabId} onChange={onTabChange} />
 {#if activeTabId === 'convert'}
-	<Converter />
+	<ConvertPage />
 {/if}
