@@ -39,7 +39,13 @@ describe('interpreter', () => {
       ];
 
       const runner = interpreter.run(input);
-      const result = runner.next();
+      let result = runner.next();
+
+      assert.strictEqual(result.done, false);
+      assert.strictEqual(result.value.pointer, 1);
+      assert.strictEqual(result.value.memory[1], 0);
+
+      result = runner.next();
 
       assert.strictEqual(result.done, true);
       assert.strictEqual(interpreter.pointer, 1);
@@ -52,7 +58,25 @@ describe('interpreter', () => {
       ];
 
       const runner = interpreter.run(input);
-      const result = runner.next();
+      let result = runner.next();
+
+      assert.strictEqual(result.done, false);
+      assert.strictEqual(result.value.pointer, 1);
+      assert.strictEqual(result.value.memory[1], 0);
+
+      result = runner.next();
+
+      assert.strictEqual(result.done, false);
+      assert.strictEqual(result.value.pointer, 2);
+      assert.strictEqual(result.value.memory[2], 0);
+
+      result = runner.next();
+
+      assert.strictEqual(result.done, false);
+      assert.strictEqual(result.value.pointer, 3);
+      assert.strictEqual(result.value.memory[3], 0);
+
+      result = runner.next();
 
       assert.strictEqual(result.done, true);
       assert.strictEqual(interpreter.pointer, 3);
@@ -76,7 +100,12 @@ describe('interpreter', () => {
       ];
 
       const runner = interpreter.run(input);
-      const result = runner.next();
+      let result = runner.next();
+
+      assert.strictEqual(result.done, false);
+      assert.strictEqual(result.value.memory[0], 1);
+
+      result = runner.next();
 
       assert.strictEqual(result.done, true);
       assert.strictEqual(interpreter.memory[0], 1);
@@ -88,7 +117,22 @@ describe('interpreter', () => {
       ];
 
       const runner = interpreter.run(input);
-      const result = runner.next();
+      let result = runner.next();
+
+      assert.strictEqual(result.done, false);
+      assert.strictEqual(result.value.memory[0], 1);
+
+      result = runner.next();
+
+      assert.strictEqual(result.done, false);
+      assert.strictEqual(result.value.memory[0], 2);
+
+      result = runner.next();
+
+      assert.strictEqual(result.done, false);
+      assert.strictEqual(result.value.memory[0], 3);
+
+      result = runner.next();
 
       assert.strictEqual(result.done, true);
       assert.strictEqual(interpreter.memory[0], 3);
@@ -103,8 +147,8 @@ describe('interpreter', () => {
       const runner = interpreter.run(input);
       const result = runner.next();
 
-      assert.strictEqual(result.done, true);
-      assert.strictEqual(interpreter.memory[0], 0);
+      assert.strictEqual(result.done, false);
+      assert.strictEqual(result.value.memory[0], 0);
     });
 
     it('runs an empty decrement instruction', () => {
@@ -127,7 +171,12 @@ describe('interpreter', () => {
       interpreter.memory[0] = 50;
 
       const runner = interpreter.run(input);
-      const result = runner.next();
+      let result = runner.next();
+
+      assert.strictEqual(result.done, false);
+      assert.strictEqual(result.value.memory[0], 49);
+
+      result = runner.next();
 
       assert.strictEqual(result.done, true);
       assert.strictEqual(interpreter.memory[0], 49);
@@ -140,7 +189,22 @@ describe('interpreter', () => {
       interpreter.memory[0] = 50;
 
       const runner = interpreter.run(input);
-      const result = runner.next();
+      let result = runner.next();
+
+      assert.strictEqual(result.done, false);
+      assert.strictEqual(result.value.memory[0], 49);
+
+      result = runner.next();
+
+      assert.strictEqual(result.done, false);
+      assert.strictEqual(result.value.memory[0], 48);
+
+      result = runner.next();
+
+      assert.strictEqual(result.done, false);
+      assert.strictEqual(result.value.memory[0], 47);
+
+      result = runner.next();
 
       assert.strictEqual(result.done, true);
       assert.strictEqual(interpreter.memory[0], 47);
@@ -155,7 +219,7 @@ describe('interpreter', () => {
       const runner = interpreter.run(input);
       const result = runner.next();
 
-      assert.strictEqual(result.done, true);
+      assert.strictEqual(result.done, false);
       assert.strictEqual(interpreter.memory[0], 255);
     });
   });

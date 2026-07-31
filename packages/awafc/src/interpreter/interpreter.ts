@@ -24,12 +24,20 @@ export class Interpreter implements State {
           for (let count = token.count; count > 0; count--) {
             const size = 2 ** CELL_SIZE;
             this.memory[this.pointer] = (this.memory[this.pointer] + 1) % size;
+            yield {
+              memory: this.memory,
+              pointer: this.pointer,
+            };
           }
           break;
         case TokenType.Decrement:
           for (let count = token.count; count > 0; count--) {
             const size = 2 ** CELL_SIZE;
             this.memory[this.pointer] = (this.memory[this.pointer] - 1 + size) % size;
+            yield {
+              memory: this.memory,
+              pointer: this.pointer,
+            };
           }
           break;
         case TokenType.RightShift:
@@ -38,6 +46,10 @@ export class Interpreter implements State {
             if (this.memory[this.pointer] === undefined) {
               this.memory[this.pointer] = 0;
             }
+            yield {
+              memory: this.memory,
+              pointer: this.pointer,
+            };
           }
           break;
       }
