@@ -5,14 +5,16 @@
 
 	let input = $state('');
 	let output = $state('');
+	let interpreter;
+	let runner;
 
   async function run() {
 		const parser = new AwafudgeParser();
 		const ast = parser.parse(input);
 
-		const interpreter = new Interpreter();
+		interpreter = new Interpreter();
 
-		const runner = interpreter.run(ast);
+		runner = interpreter.run(ast);
 
 		let step;
 		do {
@@ -22,12 +24,16 @@
 			}
 			await new Promise((resolve) => setTimeout(resolve, 300));
 		} while (!step.done);
-		
   }
+
+	function stop() {
+		runner?.return();
+	}
 </script>
 
 <div class="actions">
   <button onclick={run}>Run</button>
+  <button onclick={stop}>Stop</button>
 </div>
 
 <div class="input">
