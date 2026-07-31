@@ -20,207 +20,214 @@ describe('interpreter', () => {
       assert.strictEqual(result.done, true);
     });
 
-    it('runs an empty right shift instruction', () => {
-      const input: Token[] = [
-        { type: TokenType.RightShift, count: 0 },
-      ];
+    describe('right shift', () => {
+      it('runs an empty right shift instruction', () => {
+        const input: Token[] = [
+          { type: TokenType.RightShift, count: 0 },
+        ];
 
-      const runner = interpreter.run(input);
-      const result = runner.next();
+        const runner = interpreter.run(input);
+        const result = runner.next();
 
-      assert.strictEqual(result.done, true);
-      assert.strictEqual(interpreter.pointer, 0);
-      assert.strictEqual(interpreter.memory[0], 0);
+        assert.strictEqual(result.done, true);
+        assert.strictEqual(interpreter.pointer, 0);
+        assert.strictEqual(interpreter.memory[0], 0);
+      });
+
+      it('runs a single right shift instruction', () => {
+        const input: Token[] = [
+          { type: TokenType.RightShift, count: 1 },
+        ];
+
+        const runner = interpreter.run(input);
+        let result = runner.next();
+
+        assert.strictEqual(result.done, false);
+        assert.strictEqual(result.value.pointer, 1);
+        assert.strictEqual(result.value.memory[1], 0);
+
+        result = runner.next();
+
+        assert.strictEqual(result.done, true);
+        assert.strictEqual(interpreter.pointer, 1);
+        assert.strictEqual(interpreter.memory[1], 0);
+      });
+
+      it('runs multiple right shift instructions', () => {
+        const input: Token[] = [
+          { type: TokenType.RightShift, count: 3 },
+        ];
+
+        const runner = interpreter.run(input);
+        let result = runner.next();
+
+        assert.strictEqual(result.done, false);
+        assert.strictEqual(result.value.pointer, 1);
+        assert.strictEqual(result.value.memory[1], 0);
+
+        result = runner.next();
+
+        assert.strictEqual(result.done, false);
+        assert.strictEqual(result.value.pointer, 2);
+        assert.strictEqual(result.value.memory[2], 0);
+
+        result = runner.next();
+
+        assert.strictEqual(result.done, false);
+        assert.strictEqual(result.value.pointer, 3);
+        assert.strictEqual(result.value.memory[3], 0);
+
+        result = runner.next();
+
+        assert.strictEqual(result.done, true);
+        assert.strictEqual(interpreter.pointer, 3);
+        assert.strictEqual(interpreter.memory[3], 0);
+      });
     });
 
-    it('runs a single right shift instruction', () => {
-      const input: Token[] = [
-        { type: TokenType.RightShift, count: 1 },
-      ];
+    describe('increment', () => {
+      it('runs an empty increment instruction', () => {
+        const input: Token[] = [
+          { type: TokenType.Increment, count: 0 },
+        ];
 
-      const runner = interpreter.run(input);
-      let result = runner.next();
+        const runner = interpreter.run(input);
+        const result = runner.next();
 
-      assert.strictEqual(result.done, false);
-      assert.strictEqual(result.value.pointer, 1);
-      assert.strictEqual(result.value.memory[1], 0);
+        assert.strictEqual(result.done, true);
+        assert.strictEqual(interpreter.memory[0], 0);
+      });
 
-      result = runner.next();
+      it('runs a single increment instruction', () => {
+        const input: Token[] = [
+          { type: TokenType.Increment, count: 1 },
+        ];
 
-      assert.strictEqual(result.done, true);
-      assert.strictEqual(interpreter.pointer, 1);
-      assert.strictEqual(interpreter.memory[1], 0);
+        const runner = interpreter.run(input);
+        let result = runner.next();
+
+        assert.strictEqual(result.done, false);
+        assert.strictEqual(result.value.memory[0], 1);
+
+        result = runner.next();
+
+        assert.strictEqual(result.done, true);
+        assert.strictEqual(interpreter.memory[0], 1);
+      });
+
+      it('runs multiple increment instructions', () => {
+        const input: Token[] = [
+          { type: TokenType.Increment, count: 3 },
+        ];
+
+        const runner = interpreter.run(input);
+        let result = runner.next();
+
+        assert.strictEqual(result.done, false);
+        assert.strictEqual(result.value.memory[0], 1);
+
+        result = runner.next();
+
+        assert.strictEqual(result.done, false);
+        assert.strictEqual(result.value.memory[0], 2);
+
+        result = runner.next();
+
+        assert.strictEqual(result.done, false);
+        assert.strictEqual(result.value.memory[0], 3);
+
+        result = runner.next();
+
+        assert.strictEqual(result.done, true);
+        assert.strictEqual(interpreter.memory[0], 3);
+      });
+
+      it('overflows the cell when incrementing past the max', () => {
+        const input: Token[] = [
+          { type: TokenType.Increment, count: 1 },
+        ];
+        interpreter.memory[0] = 255;
+
+        const runner = interpreter.run(input);
+        const result = runner.next();
+
+        assert.strictEqual(result.done, false);
+        assert.strictEqual(result.value.memory[0], 0);
+      });
     });
 
-    it('runs multiple right shift instructions', () => {
-      const input: Token[] = [
-        { type: TokenType.RightShift, count: 3 },
-      ];
+    describe('decrement', () => {
+      it('runs an empty decrement instruction', () => {
+        const input: Token[] = [
+          { type: TokenType.Decrement, count: 0 },
+        ];
+        interpreter.memory[0] = 50;
 
-      const runner = interpreter.run(input);
-      let result = runner.next();
+        const runner = interpreter.run(input);
+        const result = runner.next();
 
-      assert.strictEqual(result.done, false);
-      assert.strictEqual(result.value.pointer, 1);
-      assert.strictEqual(result.value.memory[1], 0);
+        assert.strictEqual(result.done, true);
+        assert.strictEqual(interpreter.memory[0], 50);
+      });
 
-      result = runner.next();
+      it('runs a single decrement instruction', () => {
+        const input: Token[] = [
+          { type: TokenType.Decrement, count: 1 },
+        ];
+        interpreter.memory[0] = 50;
 
-      assert.strictEqual(result.done, false);
-      assert.strictEqual(result.value.pointer, 2);
-      assert.strictEqual(result.value.memory[2], 0);
+        const runner = interpreter.run(input);
+        let result = runner.next();
 
-      result = runner.next();
+        assert.strictEqual(result.done, false);
+        assert.strictEqual(result.value.memory[0], 49);
 
-      assert.strictEqual(result.done, false);
-      assert.strictEqual(result.value.pointer, 3);
-      assert.strictEqual(result.value.memory[3], 0);
+        result = runner.next();
 
-      result = runner.next();
+        assert.strictEqual(result.done, true);
+        assert.strictEqual(interpreter.memory[0], 49);
+      });
 
-      assert.strictEqual(result.done, true);
-      assert.strictEqual(interpreter.pointer, 3);
-      assert.strictEqual(interpreter.memory[3], 0);
-    });
+      it('runs multiple decrement instructions', () => {
+        const input: Token[] = [
+          { type: TokenType.Decrement, count: 3 },
+        ];
+        interpreter.memory[0] = 50;
 
-    it('runs an empty increment instruction', () => {
-      const input: Token[] = [
-        { type: TokenType.Increment, count: 0 },
-      ];
+        const runner = interpreter.run(input);
+        let result = runner.next();
 
-      const runner = interpreter.run(input);
-      const result = runner.next();
+        assert.strictEqual(result.done, false);
+        assert.strictEqual(result.value.memory[0], 49);
 
-      assert.strictEqual(result.done, true);
-      assert.strictEqual(interpreter.memory[0], 0);
-    });
-    it('runs a single increment instruction', () => {
-      const input: Token[] = [
-        { type: TokenType.Increment, count: 1 },
-      ];
+        result = runner.next();
 
-      const runner = interpreter.run(input);
-      let result = runner.next();
+        assert.strictEqual(result.done, false);
+        assert.strictEqual(result.value.memory[0], 48);
 
-      assert.strictEqual(result.done, false);
-      assert.strictEqual(result.value.memory[0], 1);
+        result = runner.next();
 
-      result = runner.next();
+        assert.strictEqual(result.done, false);
+        assert.strictEqual(result.value.memory[0], 47);
 
-      assert.strictEqual(result.done, true);
-      assert.strictEqual(interpreter.memory[0], 1);
-    });
+        result = runner.next();
 
-    it('runs multiple increment instructions', () => {
-      const input: Token[] = [
-        { type: TokenType.Increment, count: 3 },
-      ];
+        assert.strictEqual(result.done, true);
+        assert.strictEqual(interpreter.memory[0], 47);
+      });
 
-      const runner = interpreter.run(input);
-      let result = runner.next();
+      it('underflows the cell when decrementing from 0', () => {
+        const input: Token[] = [
+          { type: TokenType.Decrement, count: 1 },
+        ];
+        interpreter.memory[0] = 0;
 
-      assert.strictEqual(result.done, false);
-      assert.strictEqual(result.value.memory[0], 1);
+        const runner = interpreter.run(input);
+        const result = runner.next();
 
-      result = runner.next();
-
-      assert.strictEqual(result.done, false);
-      assert.strictEqual(result.value.memory[0], 2);
-
-      result = runner.next();
-
-      assert.strictEqual(result.done, false);
-      assert.strictEqual(result.value.memory[0], 3);
-
-      result = runner.next();
-
-      assert.strictEqual(result.done, true);
-      assert.strictEqual(interpreter.memory[0], 3);
-    });
-
-    it('overflows the cell when incrementing past the max', () => {
-      const input: Token[] = [
-        { type: TokenType.Increment, count: 1 },
-      ];
-      interpreter.memory[0] = 255;
-
-      const runner = interpreter.run(input);
-      const result = runner.next();
-
-      assert.strictEqual(result.done, false);
-      assert.strictEqual(result.value.memory[0], 0);
-    });
-
-    it('runs an empty decrement instruction', () => {
-      const input: Token[] = [
-        { type: TokenType.Decrement, count: 0 },
-      ];
-      interpreter.memory[0] = 50;
-
-      const runner = interpreter.run(input);
-      const result = runner.next();
-
-      assert.strictEqual(result.done, true);
-      assert.strictEqual(interpreter.memory[0], 50);
-    });
-
-    it('runs a single decrement instruction', () => {
-      const input: Token[] = [
-        { type: TokenType.Decrement, count: 1 },
-      ];
-      interpreter.memory[0] = 50;
-
-      const runner = interpreter.run(input);
-      let result = runner.next();
-
-      assert.strictEqual(result.done, false);
-      assert.strictEqual(result.value.memory[0], 49);
-
-      result = runner.next();
-
-      assert.strictEqual(result.done, true);
-      assert.strictEqual(interpreter.memory[0], 49);
-    });
-
-    it('runs multiple decrement instructions', () => {
-      const input: Token[] = [
-        { type: TokenType.Decrement, count: 3 },
-      ];
-      interpreter.memory[0] = 50;
-
-      const runner = interpreter.run(input);
-      let result = runner.next();
-
-      assert.strictEqual(result.done, false);
-      assert.strictEqual(result.value.memory[0], 49);
-
-      result = runner.next();
-
-      assert.strictEqual(result.done, false);
-      assert.strictEqual(result.value.memory[0], 48);
-
-      result = runner.next();
-
-      assert.strictEqual(result.done, false);
-      assert.strictEqual(result.value.memory[0], 47);
-
-      result = runner.next();
-
-      assert.strictEqual(result.done, true);
-      assert.strictEqual(interpreter.memory[0], 47);
-    });
-
-    it('underflows the cell when decrementing from 0', () => {
-      const input: Token[] = [
-        { type: TokenType.Decrement, count: 1 },
-      ];
-      interpreter.memory[0] = 0;
-
-      const runner = interpreter.run(input);
-      const result = runner.next();
-
-      assert.strictEqual(result.done, false);
-      assert.strictEqual(interpreter.memory[0], 255);
+        assert.strictEqual(result.done, false);
+        assert.strictEqual(interpreter.memory[0], 255);
+      });
     });
   });
 });
