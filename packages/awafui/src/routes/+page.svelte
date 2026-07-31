@@ -2,6 +2,7 @@
 	import TabBar, { type TabDescriptor } from "$lib/TabBar.svelte";
 	import ConvertPage from "$lib/pages/ConvertPage.svelte";
 	import FormatPage from "$lib/pages/FormatPage.svelte";
+	import RunPage from "$lib/pages/RunPage.svelte";
 
 	let activeTabId = $state('convert');
 
@@ -13,6 +14,10 @@
 		{
 			id: 'format',
 			title: 'Format',
+		},
+		{
+			id: 'run',
+			title: 'Run',
 		},
 	];
 
@@ -28,4 +33,6 @@
 	<ConvertPage />
 {:else if activeTabId === 'format'}
 	<FormatPage />
+{:else if activeTabId === 'run'}
+	<RunPage />
 {/if}
