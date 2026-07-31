@@ -26,9 +26,12 @@
   }
 
   th, td {
+    box-sizing: content-box;
+    width: 3ch;
     border: 1px inset black;
     padding: 0.5ex;
     background-color: white;
+    text-align: right;
   }
 
   .current {
