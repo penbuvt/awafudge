@@ -20,8 +20,7 @@
 			if (!step.done) {
 				output = step.value;
 			}
-			await tick();
-			console.log('DEBUG step', step);
+			await new Promise((resolve) => setTimeout(resolve, 300));
 		} while (!step.done);
 		
   }
