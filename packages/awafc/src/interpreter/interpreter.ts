@@ -3,12 +3,12 @@ import { TokenType } from '../token-types';
 
 const CELL_SIZE = 8;
 
-interface State {
+export interface InterpreterState {
   memory: number[];
   pointer: number;
 }
 
-export class Interpreter implements State {
+export class Interpreter implements InterpreterState {
   memory: number[];
   pointer: number;
 

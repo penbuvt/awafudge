@@ -4,4 +4,4 @@ export * from './parsers/awafudge';
 export * from './parsers/brainfuck';
 export * as AwafudgeFormatter from './formatters/awafudge';
 export * as BrainfuckFormatter from './formatters/brainfuck';
-
+export * from './interpreter/interpreter';
