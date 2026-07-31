@@ -17,7 +17,7 @@ export class Interpreter implements InterpreterState {
     this.pointer = 0;
   }
 
-  *run(program: Token[]) {
+  *run(program: Token[]): Generator<InterpreterState> {
     for (let token of program) {
       switch (token.type) {
         case TokenType.Increment:
@@ -62,6 +62,11 @@ export class Interpreter implements InterpreterState {
               memory: this.memory,
               pointer: this.pointer,
             };
+          }
+          break;
+        case TokenType.Loop:
+          while (this.memory[this.pointer] !== 0) {
+            yield* this.run(token.content);
           }
           break;
       }
