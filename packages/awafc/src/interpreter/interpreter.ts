@@ -52,6 +52,18 @@ export class Interpreter implements InterpreterState {
             };
           }
           break;
+        case TokenType.LeftShift:
+          for (let count = token.count; count > 0; count--) {
+            this.pointer--;
+            if (this.memory[this.pointer] === undefined) {
+              this.memory[this.pointer] = 0;
+            }
+            yield {
+              memory: this.memory,
+              pointer: this.pointer,
+            };
+          }
+          break;
       }
     }
   }

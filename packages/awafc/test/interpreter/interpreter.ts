@@ -85,6 +85,81 @@ describe('interpreter', () => {
       });
     });
 
+    describe('left shift', () => {
+      beforeEach(() => {
+        interpreter.memory = new Array(51);
+        interpreter.pointer = 50;
+      });
+
+      it('runs an empty left shift instruction', () => {
+        const input: Token[] = [
+          { type: TokenType.LeftShift, count: 0 },
+        ];
+
+        const runner = interpreter.run(input);
+        const result = runner.next();
+
+        assert.strictEqual(result.done, true);
+        assert.strictEqual(interpreter.pointer, 50);
+        assert.strictEqual(interpreter.memory[50], undefined);
+      });
+
+      it('runs a single left shift instruction', () => {
+        const input: Token[] = [
+          { type: TokenType.LeftShift, count: 1 },
+        ];
+
+        const runner = interpreter.run(input);
+        let result = runner.next();
+
+        assert.strictEqual(result.done, false);
+        assert.strictEqual(result.value.pointer, 49);
+        assert.strictEqual(result.value.memory[49], 0);
+
+        result = runner.next();
+
+        assert.strictEqual(result.done, true);
+        assert.strictEqual(interpreter.pointer, 49);
+        assert.strictEqual(interpreter.memory[49], 0);
+      });
+
+      it('runs multiple left shift instructions', () => {
+        const input: Token[] = [
+          { type: TokenType.LeftShift, count: 3 },
+        ];
+
+        const runner = interpreter.run(input);
+        let result = runner.next();
+
+        assert.strictEqual(result.done, false);
+        assert.strictEqual(result.value.pointer, 49);
+        assert.strictEqual(result.value.memory[49], 0);
+
+        result = runner.next();
+
+        assert.strictEqual(result.done, false);
+        assert.strictEqual(result.value.pointer, 48);
+        assert.strictEqual(result.value.memory[48], 0);
+
+        result = runner.next();
+
+        assert.strictEqual(result.done, false);
+        assert.strictEqual(result.value.pointer, 47);
+        assert.strictEqual(result.value.memory[47], 0);
+
+        result = runner.next();
+
+        assert.strictEqual(result.done, true);
+        assert.strictEqual(interpreter.pointer, 47);
+        assert.strictEqual(interpreter.memory[47], 0);
+      });
+
+      it('runs a single left shift instruction with the pointer at the left-most position'
+        // behaviour when a left shift instruction is encoutered
+        // when pointer === 0 is undefined
+      );
+    });
+
     describe('increment', () => {
       it('runs an empty increment instruction', () => {
         const input: Token[] = [
