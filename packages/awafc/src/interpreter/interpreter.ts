@@ -3,12 +3,17 @@ import { TokenType } from '../token-types';
 
 const CELL_SIZE = 8;
 
-export class Interpreter {
-  state: number[];
+interface State {
+  memory: number[];
+  pointer: number;
+}
+
+export class Interpreter implements State {
+  memory: number[];
   pointer: number;
 
   constructor() {
-    this.state = [0];
+    this.memory = [0];
     this.pointer = 0;
   }
 
@@ -18,20 +23,20 @@ export class Interpreter {
         case TokenType.Increment:
           for (let count = token.count; count > 0; count--) {
             const size = 2 ** CELL_SIZE;
-            this.state[this.pointer] = (this.state[this.pointer] + 1) % size;
+            this.memory[this.pointer] = (this.memory[this.pointer] + 1) % size;
           }
           break;
         case TokenType.Decrement:
           for (let count = token.count; count > 0; count--) {
             const size = 2 ** CELL_SIZE;
-            this.state[this.pointer] = (this.state[this.pointer] - 1 + size) % size;
+            this.memory[this.pointer] = (this.memory[this.pointer] - 1 + size) % size;
           }
           break;
         case TokenType.RightShift:
           for (let count = token.count; count > 0; count--) {
             this.pointer++;
-            if (this.state[this.pointer] === undefined) {
-              this.state[this.pointer] = 0;
+            if (this.memory[this.pointer] === undefined) {
+              this.memory[this.pointer] = 0;
             }
           }
           break;

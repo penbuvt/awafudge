@@ -30,7 +30,7 @@ describe('interpreter', () => {
 
       assert.strictEqual(result.done, true);
       assert.strictEqual(interpreter.pointer, 0);
-      assert.strictEqual(interpreter.state[0], 0);
+      assert.strictEqual(interpreter.memory[0], 0);
     });
 
     it('runs a single right shift instruction', () => {
@@ -43,7 +43,7 @@ describe('interpreter', () => {
 
       assert.strictEqual(result.done, true);
       assert.strictEqual(interpreter.pointer, 1);
-      assert.strictEqual(interpreter.state[1], 0);
+      assert.strictEqual(interpreter.memory[1], 0);
     });
 
     it('runs multiple right shift instructions', () => {
@@ -56,7 +56,7 @@ describe('interpreter', () => {
 
       assert.strictEqual(result.done, true);
       assert.strictEqual(interpreter.pointer, 3);
-      assert.strictEqual(interpreter.state[3], 0);
+      assert.strictEqual(interpreter.memory[3], 0);
     });
 
     it('runs an empty increment instruction', () => {
@@ -68,7 +68,7 @@ describe('interpreter', () => {
       const result = runner.next();
 
       assert.strictEqual(result.done, true);
-      assert.strictEqual(interpreter.state[0], 0);
+      assert.strictEqual(interpreter.memory[0], 0);
     });
     it('runs a single increment instruction', () => {
       const input: Token[] = [
@@ -79,7 +79,7 @@ describe('interpreter', () => {
       const result = runner.next();
 
       assert.strictEqual(result.done, true);
-      assert.strictEqual(interpreter.state[0], 1);
+      assert.strictEqual(interpreter.memory[0], 1);
     });
 
     it('runs multiple increment instructions', () => {
@@ -91,72 +91,72 @@ describe('interpreter', () => {
       const result = runner.next();
 
       assert.strictEqual(result.done, true);
-      assert.strictEqual(interpreter.state[0], 3);
+      assert.strictEqual(interpreter.memory[0], 3);
     });
 
     it('overflows the cell when incrementing past the max', () => {
       const input: Token[] = [
         { type: TokenType.Increment, count: 1 },
       ];
-      interpreter.state[0] = 255;
+      interpreter.memory[0] = 255;
 
       const runner = interpreter.run(input);
       const result = runner.next();
 
       assert.strictEqual(result.done, true);
-      assert.strictEqual(interpreter.state[0], 0);
+      assert.strictEqual(interpreter.memory[0], 0);
     });
 
     it('runs an empty decrement instruction', () => {
       const input: Token[] = [
         { type: TokenType.Decrement, count: 0 },
       ];
-      interpreter.state[0] = 50;
+      interpreter.memory[0] = 50;
 
       const runner = interpreter.run(input);
       const result = runner.next();
 
       assert.strictEqual(result.done, true);
-      assert.strictEqual(interpreter.state[0], 50);
+      assert.strictEqual(interpreter.memory[0], 50);
     });
 
     it('runs a single decrement instruction', () => {
       const input: Token[] = [
         { type: TokenType.Decrement, count: 1 },
       ];
-      interpreter.state[0] = 50;
+      interpreter.memory[0] = 50;
 
       const runner = interpreter.run(input);
       const result = runner.next();
 
       assert.strictEqual(result.done, true);
-      assert.strictEqual(interpreter.state[0], 49);
+      assert.strictEqual(interpreter.memory[0], 49);
     });
 
     it('runs multiple decrement instructions', () => {
       const input: Token[] = [
         { type: TokenType.Decrement, count: 3 },
       ];
-      interpreter.state[0] = 50;
+      interpreter.memory[0] = 50;
 
       const runner = interpreter.run(input);
       const result = runner.next();
 
       assert.strictEqual(result.done, true);
-      assert.strictEqual(interpreter.state[0], 47);
+      assert.strictEqual(interpreter.memory[0], 47);
     });
 
     it('underflows the cell when decrementing from 0', () => {
       const input: Token[] = [
         { type: TokenType.Decrement, count: 1 },
       ];
-      interpreter.state[0] = 0;
+      interpreter.memory[0] = 0;
 
       const runner = interpreter.run(input);
       const result = runner.next();
 
       assert.strictEqual(result.done, true);
-      assert.strictEqual(interpreter.state[0], 255);
+      assert.strictEqual(interpreter.memory[0], 255);
     });
   });
 });
