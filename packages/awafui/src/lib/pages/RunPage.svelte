@@ -1,6 +1,7 @@
 <script lang="typescript">
 	import { tick } from "svelte";
 	import { AwafudgeParser, Interpreter } from "awafudge";
+	import MemoryView from "$lib/MemoryView.svelte";
 
 	let input = $state('');
 	let output = $state('');
@@ -33,3 +34,5 @@
 <div class="input">
   <textarea bind:value={input} rows={4} cols={80}></textarea>
 </div>
+
+<MemoryView {...output} />
